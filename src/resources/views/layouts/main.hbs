@@ -13,10 +13,8 @@
 </head>
 
 <body>
-    <div class="app">
-
-        {{> header}}
-
+    <div class="container">
+        <div class="app">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="navbar-brand" href="#">Navbar</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -54,10 +52,15 @@
                 </form>
             </div>
         </nav>
+
+        {{> header}}
+
+        
         <div class="main">
             {{{body}}}
         </div>
         {{> footer}}
+    </div>
     </div>
 
 
