@@ -1,18 +1,18 @@
 <div class="mt-4">
     <div class="row">
 
-        {{#each courses}}
+        {{#each students}}
         <div class="col-sm-6 col-lg-4">
             <div class="card">
-                <a href="/courses/{{this.slug}}">
-                    <img class="card-img-top" src="{{this.image}}" alt="{{this.name}}">
+                <a href="/students/{{this.name}}">
+                    aaaaaaaaa
                 </a>
                 <div class="card-body">
-                    <a href="/courses/{{this.slug}}">
+                    <a href="/students/{{this.name}}">
                         <h5 class="card-title">{{this.name}}</h5>
                     </a>
-                    <p class="card-text">{{this.description}}</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p class="card-text">{{this.detail}}</p>
+                    <a href="/students/{{this.name}}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>

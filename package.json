@@ -142,6 +142,7 @@
     "mongoose": "^5.10.16",
     "mongoose-legacy-pluralize": "^1.0.2",
     "mongoose-morgan": "^1.0.16",
+    "mongoose-slug-generator": "^1.0.4",
     "morgan": "^1.10.0",
     "mpath": "^0.7.0",
     "mquery": "^3.2.2",
