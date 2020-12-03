@@ -1,4 +1,5 @@
 const path = require('path');
+const mysql = require('mysql');
 const express = require('express');
 const morgan = require('morgan');
 var handlebars = require('express-handlebars');
@@ -6,14 +7,28 @@ const app = express();
 const port = 3000;
 
 const route = require('./routes/index');
-const db = require('./config/db')
+//const db = require('./config/db')
 
-//Connect DB
-db.connect();
+const db = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "duy123",
+    database: "quan_ly_thuc_tap_sinh",
+    port: 3306,
+});
+
+db.connect((err)=>{
+    if(err){
+        throw err;
+    }
+    console.log("connect to database");
+});
+
+global.db = db;
+
 
 //Xử lý static file
 app.use(express.static(path.join(__dirname,'public')));
-
 
 app.use(
     express.urlencoded({

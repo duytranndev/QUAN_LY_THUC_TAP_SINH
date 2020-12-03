@@ -1,17 +1,18 @@
-const mongoose = require("mongoose");
-// Using ES6 imports
+
+const mysql = require("mysql");
 
 async function connect() {
   try {
-        await mongoose.connect("mongodb://localhost:27017/quan_ly_thuc_tap_dev", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
+    await mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "duy123",
+      database: "quan_ly_thuc_tap_sinh",
+      port: 3306,
     });
-        console.log("connect successfully!!!");
+    
   } catch (error) {
-        console.log("connect failure!!!");
+    
   }
 }
 
