@@ -3,5 +3,5 @@
 # install NodeJs
 # install ExpressJS
 # install Express-Handlebars
-# install MongoDB on window
-# install Mongoose
+# install MySql
+# install " npm install mysql " in terminal your Visual Studio Code
