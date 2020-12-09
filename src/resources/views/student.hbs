@@ -4,14 +4,14 @@
         {{#each students}}
         <div class="col-sm-6 col-lg-4">
             <div class="card">
-                <a href="/students/{{this.name}}">
-                    aaaaaaaaa
+                <a href="/students/{{this.slug}}">
+                    <img src="./public/assets/img/{{this.image}}" alt="">
                 </a>
                 <div class="card-body">
-                    <a href="/students/{{this.name}}">
+                    <a href="/students/{{this.name_student}}">
                         <h5 class="card-title">{{this.name}}</h5>
                     </a>
-                    <p class="card-text">{{this.detail}}</p>
+                    <p class="card-text">{{this.describe_student}}</p>
                     <a href="/students/{{this.name}}" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>

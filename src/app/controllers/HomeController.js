@@ -2,7 +2,7 @@
 const getHomePage = require('../models/course');
 const { mutipleMongooseToObject } = require('../../util/mongoose')
 
-class SiteController {
+class HomeController {
     //[GET] /news
     index(req, res, next) {
         //etHomePage();
@@ -14,4 +14,4 @@ class SiteController {
     }
 }
 
-module.exports = new SiteController();
+module.exports = new HomeController();
