@@ -3,22 +3,30 @@ const {
   getStudent,
   getStudentBySlug,
   createStudent,
+  getStudentByID,
+  updateStudent,
+  deleteStudent
 } = require("../models/student");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { result } = require("lodash");
 const { error } = require("npmlog");
 
+
+
 class StudentController {
 
     //[GET] students/create
   create(req, res) {
+    //get dữ liệu của mấy thằng khác xong rồi đổ vào drop
     res.render("students/create_student");
   }
-  //[POST] students/store =>render students/stored
+  //[POST] students/create data => students/store => render students/stored
   store(req, res) {
-    const file = req.files;
+
+    
     const body = req.body;
-    //const salt = genSaltSync(10);
+    const file = req.files
+    const salt = genSaltSync(10);
     createStudent(body, file, (error, results) => {
       if (error) {
         console.log(error);
@@ -27,12 +35,23 @@ class StudentController {
           message: "Database connection error",
         });
       }
-      return res.status(200).json({
-        success: 1,
+      res.redirect('stored');
+    });
+    
+    // var test = req.files.image_student;
+    // res.json(test.name);
+  }
+
+  stored(req, res) {
+    getStudent((error, results) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      return res.render("students/stored_student", {
         students: results,
       });
     });
-    res.redirect("/stored");
   }
   //[GET] /students/:slug
   show(req, res) {
@@ -62,17 +81,53 @@ class StudentController {
       });
     });
   }
-  stored(req, res) {
-    getStudent((error, results) => {
-      if (error) {
-        console.log(error);
+
+  edit(req, res){
+    const id = req.params.id_student;
+    getStudentByID(id, (err, results) => {
+      if (err) {
+        console.log(err);
         return;
       }
-      return res.render("students/stored_student", {
-        data: results,
+      return res.render("students/edit_student", {
+        students: results,
       });
+      // return res.render('courses/show',{
+      //     data:results
+      // })
     });
   }
+
+  //[PUT] /students/:id_student
+  update(req, res){
+    const data = req.body;
+    const file = req.files;
+    updateStudent(data,file, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.redirect('stored')
+      // return res.render('courses/show',{
+      //     data:results
+      // })
+    });
+
+    
+  }
+//[DELETE] /students/:id_student
+  delete(req, res, next){
+    const id_student = req.params.id_student;
+    deleteStudent(id_student, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.redirect('back')
+      
+    });
+  }
+  
 }
 
 module.exports = new StudentController();

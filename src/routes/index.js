@@ -7,8 +7,10 @@ const adminRouter = require("./admins");
 function route(app) {
   app.get("/admin",adminRouter);
   app.use("/courses",coursesRouter);
-  app.use("/students",studentRouter)
-  app.use("/",coursesRouter);
+  //doanh nghiep
+  app.use("/students",studentRouter);
+  app.use("/",homeController);
+  //localhost /students => studentRouter
   //app.get("/add", addPlayerPage);
   //app.get("/edit/:id", editPlayerPage);
   //app.get("/delete/:id", deletePlayer);
