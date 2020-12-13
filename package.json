@@ -233,6 +233,7 @@
     "strip-ansi": "^3.0.1",
     "strip-bom": "^2.0.0",
     "strip-indent": "^1.0.1",
+    "sudo": "^1.0.3",
     "supports-color": "^2.0.0",
     "tar": "^6.0.5",
     "toidentifier": "^1.0.0",

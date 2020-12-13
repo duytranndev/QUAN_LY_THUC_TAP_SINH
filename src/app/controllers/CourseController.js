@@ -12,38 +12,27 @@ const { result } = require("lodash");
 
 class CourseController {
 
-  //[GET] /courses/:name/edit
-  edit(req, res){
-    const name = req.params.name;
-    getCourseById(name, (err, results) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      return res.render("courses/edit_course", {
-        data: results,
-      });
-      // return res.render('courses/show',{
-      //     data:results
-      // })
-    });
-    
+  //[GET] /courses/create
+  create(req, res) {
+    res.render("courses/create_course");
   }
 
   //[POST] /crouses
   store(req, res){
-    const body = req.body;
-    const file = req.files;
-    createCourse(body, file, (error, results) => {
-      if (error) {
-        console.log(error);
-        return res.status(500).json({
-          success: 0,
-          message: "Database connection error",
-        });
-      }
-      res.redirect('/stored');
-    });
+    // const body = req.body;
+    // const file = req.files;
+    // createCourse(body, file, (error, results) => {
+    //   if (error) {
+    //     console.log(error);
+    //     return res.status(500).json({
+    //       success: 0,
+    //       message: "Database connection error",
+    //     });
+    //   }
+    //   res.redirect('/stored');
+    // });
+    var test = req.files.image;
+    res.json(test.name);
   }
   stored(req, res){
     getCourse((err, results) => {
@@ -56,6 +45,23 @@ class CourseController {
       });
     });
   }
+
+  //[GET] /courses/:name/edit
+  edit(req, res){
+    const id_student = req.params.id_student;
+    getCourseById(id_student, (err, results) => {
+      if (err) {
+        console.log(err);
+        return;
+      }
+      return res.render("courses/edit_course", {
+        data: results,
+      });
+  
+    });
+    
+  }
+
   //[PUT] /courses/:name
   update(req, res){
     const data = req.body;
@@ -71,26 +77,7 @@ class CourseController {
     });
   }
 
-  //[GET] /courses/:slug
-  //   show(req, res, next){
-    
-  //     let query = "SELECT * FROM `course` where slug='"+req.params.slug+"'"; // query database to get all the players
-
-  //             // execute query
-  //             db.query(query, (err, result) => {
-  //                 if (err) {
-  //                     res.redirect('/');
-  //                 }
-  //                 res.render('courses/show',{
-  //                     userData: result,
-  //                     //slug: req.params.slug
-  //                 })
-  //             });
-
-  //   }
-  create(req, res) {
-    res.render("courses/create_course");
-  }
+  //[GET] /courses
   index(req, res) {
     getCourse((err, results) => {
       if (err) {

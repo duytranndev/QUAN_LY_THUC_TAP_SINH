@@ -1,8 +1,10 @@
+
+const db = require("../../config/db/database");
+const { genSaltSync, hashSync } = require("bcrypt");
 const { result } = require("lodash");
 const { error } = require("npmlog");
-const db = require("../../config/db/database");
 
-function ChangeToSlug(slug) {
+function ChangeToSlug(slug){
   slug = slug.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
   slug = slug.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
   slug = slug.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
@@ -30,6 +32,31 @@ function ChangeToSlug(slug) {
   return slug;
 }
 
+
+function ChangToID(id_student){
+  id_student = id_student.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
+  id_student = id_student.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
+  id_student = id_student.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
+  id_student = id_student.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
+  id_student = id_student.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
+  id_student = id_student.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
+  id_student = id_student.replace(/đ/gi, "d");
+  //Xóa các ký tự đặt biệt
+  id_student = id_student.replace(
+    /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi,
+    ""
+  );
+  //Xoa khoang trang
+  id_student = id_student.replace(/ /gi, "");
+  //Xóa các khoang trang ở đầu và cuối
+  id_student = "@" + id_student + "@";
+  id_student = id_student.replace(/\@\ |\ \@|\@/gi, "");
+
+  return id_student;
+}
+
+
+
 module.exports = {
   getStudent: (callBack) => {
     db.query(`select * from student`, [], (error, results, fiedls) => {
@@ -51,27 +78,41 @@ module.exports = {
       }
     );
   },
+  getStudentByID: (id, callBack) => {
+    db.query(
+      `select * from student where id_student=?`,
+      [id],
+      (error, results, fiedls) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
 
   createStudent: (data, file, callBack) => {
-    let id_student = data.id_student;
-    let name_student = data.name_student;
-    let birthday_student = data.birthday_student;
-    let sex_student = data.sex_student;
-    let class_student = data.class_student;
-    let describe_student = data.description;
-    let slug = ChangeToSlug(id_student + " " + name_student);
-    let id_school = data.id_school;
+
+    let id_student = ChangToID(data.name_student + data.mssv_student.substr(-4));
+    let slug = ChangeToSlug(data.name_student + " " + data.mssv_student.substr(-4));
+    
+
+
     let image_name;
+
     if (file) {
-      let uploadedFile = file.image;
+      
+      let uploadedFile = file.image_student;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
+      image_name =id_student + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
         uploadedFile.mimetype === "image/jpeg" ||
-        uploadedFile.mimetype === "image/gif"
+        uploadedFile.mimetype === "image/gif" ||
+        uploadedFile.mimetype === "image/jpg" ||
+        uploadedFile.mimetype === "image/raw"
       ) {
         // upload the file to the /public/assets/img directory
         uploadedFile.mv(`src/public/assets/img/${image_name}`, (err) => {
@@ -82,17 +123,17 @@ module.exports = {
       }
     }
     db.query(
-      `insert into student (id_student, name_student, birthday_student, sex_student, class_student, describe_student, image_student, slug, id_school) values(?,?,?,?,?,?,?,?)`,
+      `insert into student (id_student, mssv_student, name_student, birthday_student, gender_student, class_student, describe_student, image_student, slug) values(?,?,?,?,?,?,?,?,?)`,
       [
         id_student,
-        name_student,
-        birthday_student,
-        sex_student,
-        class_student,
-        describe_student,
+        data.mssv_student,
+        data.name_student,
+        data.birthday_student,
+        data.gender_student,
+        data.class_student,
+        data.describe_student,
         image_name,
-        slug,
-        id_school,
+        slug
       ],
       (error, results, fields) => {
         if (error) {
@@ -103,18 +144,24 @@ module.exports = {
     );
   },
   updateStudent: (data, file, callBack) => {
-    let slug = ChangeToSlug(id_student + " " + name_student);
+    let mssv_student = data.mssv_student;
+    let msv = mssv_student.substr(-4);
+    let slug = ChangeToSlug(data.name_student+" "+msv);
     let image_name;
+
     if (file) {
-      let uploadedFile = file.image;
+      
+      let uploadedFile = file.image_student;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
+      image_name =id_student + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
         uploadedFile.mimetype === "image/jpeg" ||
-        uploadedFile.mimetype === "image/gif"
+        uploadedFile.mimetype === "image/gif" ||
+        uploadedFile.mimetype === "image/jpg" ||
+        uploadedFile.mimetype === "image/raw"
       ) {
         // upload the file to the /public/assets/img directory
         uploadedFile.mv(`src/public/assets/img/${image_name}`, (err) => {
@@ -125,17 +172,16 @@ module.exports = {
       }
     }
     db.query(
-      `update student set name_student=?, birthday_student=?, sex_student=?, class_student=?, describe_student=?, image_student=?, slug=?, id_school=? where id_student=?`,
+      `update student set mssv_student=?, name_student=?, birthday_student=?, gender_student=?, class_student=?, describe_student=?, slug=? where id_student=?`,
       [
+        mssv_student,
         data.name_student,
         data.birthday_student,
-        data.sex_student,
+        data.gender_student,
         data.class_student,
         data.describe_student,
-        image_name,
         slug,
-        data.id_school,
-        data.id_student,
+        data.id_student 
       ],
       (error, results, fields) => {
         if (error) {
@@ -145,10 +191,10 @@ module.exports = {
       }
     );
   },
-  deleteStudent: (data, callBack) => {
+  deleteStudent: (id_student, callBack) => {
     db.query(
       `delete from student where id_student=?`,
-      [data.id_student],
+      [id_student],
       (error, results, fiedls) => {
         if (error) {
           callBack(error);

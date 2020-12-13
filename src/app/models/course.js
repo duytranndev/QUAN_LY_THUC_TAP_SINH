@@ -7,6 +7,7 @@ const fileUpload = require("express-fileupload");
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const { model } = require("mongoose");
+const { query } = require("express");
 
 //
 
@@ -54,6 +55,17 @@ module.exports = {
         return callBack(null, results);
       }
     );
+
+    db.query(
+        ``,[],
+        (error, results, fields) =>{
+
+        }
+    )
+
+
+
+
   },
   getCourse: (callBack) => {
     db.query(`select * from course`, [], (error, results, fields) => {

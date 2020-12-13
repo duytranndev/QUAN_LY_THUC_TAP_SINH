@@ -28,20 +28,22 @@ const route = require('./routes/index');
 
 
 //Xử lý static file
+app.use(bodyParser.urlencoded({extended: false}));
+//app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname,'/public')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
 
 app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
   }))
 
 
-// app.use(
-//     express.urlencoded({
-//         extended: true,
-//     }),
-// ); // gửi dữ liệu bằng form lên thì dùng thằng này để xử lý
+app.use(
+    express.urlencoded({
+        extended: true,
+    }),
+); // gửi dữ liệu bằng form lên thì dùng thằng này để xử lý
 app.use(express.json()); // gửi từ code JS lên thì dùng thằng này để xử lý
 
 //lay du lieu bang parameter
