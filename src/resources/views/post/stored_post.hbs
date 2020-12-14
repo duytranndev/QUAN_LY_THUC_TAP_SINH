@@ -6,7 +6,10 @@
                     <th scope="col">ID</th>
                     <th scope="col">MSSV</th>
                     <th scope="col">Tên sinh viên</th>
+                    <th scope="col">Ngày sinh</th>
+                    <th scope="col">Giới tính</th>
                     <th scope="col">Lớp</th>
+                    <th scope="col">Mô tả</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col"></th>
 
@@ -21,8 +24,12 @@
                     <td>{{this.id_student}}</td>
                     <td>{{this.mssv_student}}</td>
                     <td>{{this.name_student}}</td>
+                    <td>{{this.birthday_student}}</td>
+                    <td>{{this.gender_student}}</td>
                     <td>{{this.class_student}}</td>
-                    
+                    <td><textarea name="" id="" cols="20" rows="1" readonly>
+                        {{this.describe_student}}
+                    </textarea></td>
                     <td><img class="card-img-top" src="../assets/img/{{this.image_student}}" alt=""></td>
                     <td>
                         <a href="/students/{{this.id_student}}/edit" class="btn btn-link">Sua</a>

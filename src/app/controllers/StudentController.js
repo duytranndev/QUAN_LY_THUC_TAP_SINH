@@ -101,8 +101,9 @@ class StudentController {
   //[PUT] /students/:id_student
   update(req, res){
     const data = req.body;
+    const id = req.params.id_student;
     const file = req.files;
-    updateStudent(data,file, (err, results) => {
+    updateStudent(data,file,id, (err, results) => {
       if (err) {
         console.log(err);
         return;

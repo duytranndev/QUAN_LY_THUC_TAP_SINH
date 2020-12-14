@@ -1,13 +1,13 @@
-const newsRouter = require("./news");
-const coursesRouter = require("./courses");
+
 const homeController = require("./home");
 const studentRouter = require("./students");
 const adminRouter = require("./admins");
+const enterpriseController = require("./enterprises");
 
 function route(app) {
-  app.get("/admin",adminRouter);
-  app.use("/courses",coursesRouter);
-  //doanh nghiep
+
+  app.use("/enterprises",enterpriseController);
+  app.use("/admin",adminRouter);
   app.use("/students",studentRouter);
   app.use("/",homeController);
   //localhost /students => studentRouter

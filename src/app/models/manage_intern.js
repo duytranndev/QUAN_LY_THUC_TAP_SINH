@@ -35,17 +35,17 @@ function ChangeToSlug(slug){
 
 
 module.exports = {
-  getcourse_internship: (callBack) => {
-    db.query(`select * from course_internship`, [], (error, results, fiedls) => {
+  getStudent_internship: (callBack) => {
+    db.query(`select * from student_internship`, [], (error, results, fiedls) => {
       if (error) {
         return callBack(error);
       }
       return callBack(null, results);
     });
   },
-  getCourse_internshipBySlug: (slug, callBack) => {
+  getStudent_internshipBySlug: (slug, callBack) => {
     db.query(
-      `select * from course_internship where slug=?`,
+      `select * from student_internship where slug=?`,
       [slug],
       (error, results, fiedls) => {
         if (error) {
@@ -55,9 +55,9 @@ module.exports = {
       }
     );
   },
-  getCourse_internshipByID: (id, callBack) => {
+  getStudent_internshipByID: (id, callBack) => {
     db.query(
-      `select * from course_internship where id_course=?`,
+      `select * from student_internship where id_course=?`,
       [id],
       (error, results, fiedls) => {
         if (error) {
@@ -68,7 +68,7 @@ module.exports = {
     );
   },
 
-  createCourse_internship: (data, file, callBack) => {
+  createstudent_internship: (data, file, callBack) => {
     
     let slug = ChangeToSlug(data.id_course + " " + data.name_course);
     let image_name;
@@ -92,7 +92,7 @@ module.exports = {
       }
     }
     db.query(
-      `insert into course_internship (id_course, name_course, time_course, slug, id_enterprise) values(?,?,?,?,?)`,
+      `insert into student_internship (id_course, name_course, time_course, slug, id_enterprise) values(?,?,?,?,?)`,
       [
         data.id_course,
         data.name_course,
@@ -109,7 +109,7 @@ module.exports = {
       }
     );
   },
-  updateCourse_internship: (data, file, callBack) => {
+  updatestudent_internship: (data, file, id, callBack) => {
     let slug = ChangeToSlug(data.id_course + " " + data.name_course);
     let image_name;
     if (file) {
@@ -132,7 +132,7 @@ module.exports = {
       }
     }
     db.query(
-      `update course_internship set name_course=?, time_course=?, slug=?, id_enterprise=? where id_course=?`,
+      `update student_internship set name_course=?, time_course=?, slug=?, id_enterprise=? where id_course=?`,
       [
         data.name_course,
         data.time_course,
@@ -148,9 +148,9 @@ module.exports = {
       }
     );
   },
-  deleteCourse_internship: (data, callBack) => {
+  deletestudent_internship: (data, callBack) => {
     db.query(
-      `delete from course_internship where id_course=?`,
+      `delete from student_internship where id_course=?`,
       [data.id_course],
       (error, results, fiedls) => {
         if (error) {

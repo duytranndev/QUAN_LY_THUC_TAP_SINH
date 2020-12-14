@@ -4,9 +4,9 @@
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">MSSV</th>
-                    <th scope="col">Tên sinh viên</th>
-                    <th scope="col">Lớp</th>
+                    <th scope="col">Nickname</th>
+                    <th scope="col">Tên cong ty</th>
+                    <th scope="col">Dia chi</th>
                     <th scope="col">Hình ảnh</th>
                     <th scope="col"></th>
 
@@ -14,20 +14,19 @@
                 </tr>
             </thead>
             <tbody>
-                {{#each students}}
+                {{#each enterprises}}
 
                 <tr>
 
-                    <td>{{this.id_student}}</td>
-                    <td>{{this.mssv_student}}</td>
-                    <td>{{this.name_student}}</td>
-                    <td>{{this.class_student}}</td>
-                    
-                    <td><img class="card-img-top" src="../assets/img/{{this.image_student}}" alt=""></td>
+                    <td>{{this.id_enterprise}}</td>
+                    <td>{{this.nickname_enterprise}}</td>
+                    <td>{{this.name_enterprise}}</td>
+                    <td>{{this.address_enterprise}}</td>
+                    <td><img class="card-img-top" src="../assets/img/{{this.image_enterprise}}" alt=""></td>
                     <td>
-                        <a href="/students/{{this.id_student}}/edit" class="btn btn-link">Sua</a>
-                        <a href="" class="btn btn-link" data-toggle="modal" data-id={{this.id_student}}
-                            data-target="#delet-student-modal">Xóa</a>
+                        <a href="/enterprises/{{id_enterprise}}/edit" class="btn btn-link">Sua</a>
+                        <a href="" class="btn btn-link" data-toggle="modal" data-id={{id_enterprise}}
+                            data-target="#delete-enterprise-modal">Xóa</a>
                     </td>
 
 
@@ -41,7 +40,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="delet-student-modal" tabindex="-1" role="dialog" aria-labelledby="delet-student-modalLabel"
+<div class="modal fade" id="delete-enterprise-modal" tabindex="-1" role="dialog" aria-labelledby="delete-enterprise-modalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -55,9 +54,8 @@
                 <p>Bạn có chắc chắn muốn xóa sinh viên này?</p>
             </div>
             <div class="modal-footer">
-                <button id="btn-delete-student" type="button" class="btn btn-primary">Xóa bỏ</button>
+                <button id="btn-delete-enterprise" type="button" class="btn btn-primary">Xóa bỏ</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-
             </div>
         </div>
     </div>
@@ -66,25 +64,25 @@
 {{!-- Delete hidden form --}}
 
 {{!-- tao form trong de phuc vu cho viec submit --}}
-<form name="delete-student" class="mt-4" method="POST" ></form>
-{{!-- document.forms['delete-student'] lấy ra thằng form--}} 
+<form name="delete-enterprise" class="mt-4" method="POST" ></form>
+{{!-- document.forms['delete-enterprise'] lấy ra thằng form--}} 
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        var studentID;
-        var deleteForm = document.forms['delete-student'];
-        var btnDeleteStudent = document.getElementById('btn-delete-student');
+        var enterpriseID;
+        var deleteForm = document.forms['delete-enterprise'];
+        var btnDeleteEnterprise = document.getElementById('btn-delete-enterprise');
 
         //when dialog confirm clicked
-        $('#delet-student-modal').on('show.bs.modal', function (event) {
+        $('#delete-enterprise-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
-            studentID = button.data('id');//id này được nạp từ thằng data-id={{this.id_student}}, nó là id
+            enterpriseID = button.data('id');//id này được nạp từ thằng data-id={{this.id_enterprise}}, nó là id
             
         });
         
-        btnDeleteStudent.onclick = function(){
-            deleteForm.action ='/students/' +studentID+'?_method=DELETE';
+        btnDeleteEnterprise.onclick = function(){
+            deleteForm.action ='/enterprises/' +enterpriseID+'?_method=DELETE';
             deleteForm.submit();//submit form delete
         };
     })

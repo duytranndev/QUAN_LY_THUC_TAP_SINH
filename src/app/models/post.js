@@ -110,7 +110,7 @@ module.exports = {
       }
     );
   },
-  updatePost: (data, file, callBack) => {
+  updatePost: (data, file, id, callBack) => {
     let slug = ChangeToSlug(data.id_post + " " + data.title_post);
     let image_name;
     if (file) {
