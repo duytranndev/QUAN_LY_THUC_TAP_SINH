@@ -1,5 +1,5 @@
 //Import
-const getHomePage = require('../models/course');
+
 const { mutipleMongooseToObject } = require('../../util/mongoose')
 
 class HomeController {

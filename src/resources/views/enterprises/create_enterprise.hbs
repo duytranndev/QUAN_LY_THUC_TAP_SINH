@@ -1,0 +1,23 @@
+<form class="mt-4" method="POST" action="/enterprises/store" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label>Nick name</label>
+    <input type="text" class="form-control"  name="nickname_enterprise" placeholder="nickname_enterprise">
+  </div>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control"  name="name_enterprise" placeholder="name_enterprise">
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="date" class="form-control" name="address_enterprise" placeholder="address_enterprise">
+  </div>
+  <div class="form-group">
+    <label>Describe</label>
+    <textarea type="text" class="form-control" name="describe_enterprise" placeholder="Describe"></textarea>
+  </div>
+  <div class="custom-file">
+    <input type="file" name="image_enterprise">
+  </div>
+  <button type="submit" class="btn btn-primary">Thêm</button>
+</form>

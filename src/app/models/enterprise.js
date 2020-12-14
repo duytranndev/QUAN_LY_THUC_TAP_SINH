@@ -31,6 +31,27 @@ function ChangeToSlug(slug){
   return slug;
 }
 
+function ChangToID(id){
+  id = id.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
+  id = id.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
+  id = id.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
+  id = id.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
+  id = id.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
+  id = id.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
+  id = id.replace(/đ/gi, "d");
+  //Xóa các ký tự đặt biệt
+  id = id.replace(
+    /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi,
+    ""
+  );
+  //Xoa khoang trang
+  id = id.replace(/ /gi, "");
+  //Xóa các khoang trang ở đầu và cuối
+  id = "@" + id + "@";
+  id = id.replace(/\@\ |\ \@|\@/gi, "");
+
+  return id;
+}
 
 
 
@@ -70,13 +91,14 @@ module.exports = {
 
   createEnterprise: (data, file, callBack) => {
     
-    let slug = ChangeToSlug(data.id_enterprise + " " + data.name_enterprise);
+    let id_enterprise = ChangToID(data.nickname_enterprise+ data.name_enterprise);
+    let slug = ChangeToSlug(id_enterprise + " " + data.name_enterprise);
     let image_name;
     if (file) {
-      let uploadedFile = file.image;
+      let uploadedFile = file.image_enterprise;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
+      image_name = id_enterprise + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
@@ -92,9 +114,10 @@ module.exports = {
       }
     }
     db.query(
-      `insert into enterprise (id_enterprise, name_enterprise, address_enterprise, describe_enterprise, image_enterprise, slug) values(?,?,?,?,?,?)`,
+      `insert into enterprise (id_enterprise, nickname_enterprise,name_enterprise, address_enterprise, describe_enterprise, image_enterprise, slug) values(?,?,?,?,?,?,?)`,
       [
-        data.id_enterprise,
+        id_enterprise,
+        data.nickname_enterprise,
         data.name_enterprise,
         data.address_enterprise,
         data.describe_enterprise,
@@ -109,14 +132,14 @@ module.exports = {
       }
     );
   },
-  updateEnterprise: (data, file, callBack) => {
-    let slug = ChangeToSlug(data.id_enterprise + " " + data.name_enterprise);
+  updateEnterprise: (data, file, id ,callBack) => {
+
     let image_name;
     if (file) {
       let uploadedFile = file.image;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
+      image_name = id + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
@@ -132,14 +155,13 @@ module.exports = {
       }
     }
     db.query(
-      `update enterprise set name_enterprise=?, address_enterprise=?, describe_enterprise=?, image_enterprise=?, slug=? where id_enterprise=?`,
+      `update enterprise set nickname_enterprise=?, name_enterprise=?, address_enterprise=?, describe_enterprise=? where id_enterprise=?`,
       [
+        data.nickname_enterprise,
         data.name_enterprise,
         data.address_enterprise,
         data.describe_enterprise,
-        image_name,
-        slug,
-        data.id_enterprise
+        id
       ],
       (error, results, fields) => {
         if (error) {
@@ -149,10 +171,10 @@ module.exports = {
       }
     );
   },
-  deleteEnterprise: (data, callBack) => {
+  deleteEnterprise: (id_enterprise, callBack) => {
     db.query(
       `delete from enterprise where id_enterprise=?`,
-      [data.id_enterprise],
+      [id_enterprise],
       (error, results, fiedls) => {
         if (error) {
           callBack(error);

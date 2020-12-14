@@ -1,0 +1,28 @@
+{{#each enterprises}}
+
+<form class="mt-4" method="POST" action="/enterprises/{{this.id_enterprise}}?_method=PUT">
+  
+  <div class="form-group">
+    <label>Nick name</label>
+    <input type="text" class="form-control" value="{{this.nickname_enterprise}}" name="nickname_enterprise" placeholder="ID Student"readonly>
+  </div>
+  <div class="form-group">
+    <label>Name</label>
+    <input type="text" class="form-control" value="{{this.name_enterprise}}" name="name_enterprise" placeholder="Name">
+  </div>
+  <div class="form-group">
+    <label>Address</label>
+    <input type="date" class="form-control" value="{{this.address_enterprise}}" name="address_enterprise" placeholder="Birth Day">
+  </div>
+  
+  </div>
+  <div class="form-group">
+    <label>Describe</label>
+    <input type="text" class="form-control" value="{{this.describe_enterprise}}" name="describe_enterprise" placeholder="Class">
+  </div>
+  
+  
+  <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+
+{{/each}}

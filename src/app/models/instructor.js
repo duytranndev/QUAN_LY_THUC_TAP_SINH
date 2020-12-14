@@ -110,7 +110,7 @@ module.exports = {
       }
     );
   },
-  updateInstructor: (data, file, callBack) => {
+  updateInstructor: (data, file, id, callBack) => {
     let slug = ChangeToSlug(data.id_instructor + " " + data.name_instructor);
     let image_name;
     if (file) {

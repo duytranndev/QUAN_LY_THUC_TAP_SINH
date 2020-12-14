@@ -33,26 +33,26 @@ function ChangeToSlug(slug){
 }
 
 
-function ChangToID(id_student){
-  id_student = id_student.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
-  id_student = id_student.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
-  id_student = id_student.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
-  id_student = id_student.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
-  id_student = id_student.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
-  id_student = id_student.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
-  id_student = id_student.replace(/đ/gi, "d");
+function ChangToID(id){
+  id = id.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
+  id = id.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
+  id = id.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
+  id = id.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
+  id = id.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
+  id = id.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
+  id = id.replace(/đ/gi, "d");
   //Xóa các ký tự đặt biệt
-  id_student = id_student.replace(
+  id = id.replace(
     /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi,
     ""
   );
   //Xoa khoang trang
-  id_student = id_student.replace(/ /gi, "");
+  id = id.replace(/ /gi, "");
   //Xóa các khoang trang ở đầu và cuối
-  id_student = "@" + id_student + "@";
-  id_student = id_student.replace(/\@\ |\ \@|\@/gi, "");
+  id = "@" + id + "@";
+  id = id.replace(/\@\ |\ \@|\@/gi, "");
 
-  return id_student;
+  return id;
 }
 
 
@@ -143,7 +143,7 @@ module.exports = {
       }
     );
   },
-  updateStudent: (data, file, callBack) => {
+  updateStudent: (data, file, id, callBack) => {
     let mssv_student = data.mssv_student;
     let msv = mssv_student.substr(-4);
     let slug = ChangeToSlug(data.name_student+" "+msv);
@@ -154,7 +154,7 @@ module.exports = {
       let uploadedFile = file.image_student;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name =id_student + "." + fileExtension;
+      image_name =id + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
@@ -181,7 +181,7 @@ module.exports = {
         data.class_student,
         data.describe_student,
         slug,
-        data.id_student 
+        id
       ],
       (error, results, fields) => {
         if (error) {

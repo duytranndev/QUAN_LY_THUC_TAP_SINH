@@ -1,7 +1,10 @@
 {{#each students}}
 
 <form class="mt-4" method="POST" action="/students/{{this.id_student}}?_method=PUT">
-  
+  <div class="form-group">
+    <label>ID Student</label>
+    <input type="text" class="form-control" value="{{this.id_student}}" name="id_student" placeholder="ID Student"readonly>
+  </div>
   <div class="form-group">
     <label>Mã sinh viên</label>
     <input type="text" class="form-control" value="{{this.mssv_student}}" name="mssv_student" placeholder="ID Student"readonly>
