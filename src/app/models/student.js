@@ -123,7 +123,7 @@ module.exports = {
       }
     }
     db.query(
-      `insert into student (id_student, mssv_student, name_student, birthday_student, gender_student, class_student, describe_student, image_student, slug) values(?,?,?,?,?,?,?,?,?)`,
+      `insert into student (id_student, mssv_student, name_student, birthday_student, gender_student, class_student, describe_student, image_student,contact, slug) values(?,?,?,?,?,?,?,?,?,?)`,
       [
         id_student,
         data.mssv_student,
@@ -133,6 +133,7 @@ module.exports = {
         data.class_student,
         data.describe_student,
         image_name,
+        data.contact,
         slug
       ],
       (error, results, fields) => {
@@ -147,32 +148,9 @@ module.exports = {
     let mssv_student = data.mssv_student;
     let msv = mssv_student.substr(-4);
     let slug = ChangeToSlug(data.name_student+" "+msv);
-    let image_name;
-
-    if (file) {
-      
-      let uploadedFile = file.image_student;
-      image_name = uploadedFile.name;
-      let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name =id + "." + fileExtension;
-
-      if (
-        uploadedFile.mimetype === "image/png" ||
-        uploadedFile.mimetype === "image/jpeg" ||
-        uploadedFile.mimetype === "image/gif" ||
-        uploadedFile.mimetype === "image/jpg" ||
-        uploadedFile.mimetype === "image/raw"
-      ) {
-        // upload the file to the /public/assets/img directory
-        uploadedFile.mv(`src/public/assets/img/${image_name}`, (err) => {
-          if (err) {
-            return;
-          }
-        });
-      }
-    }
+    
     db.query(
-      `update student set mssv_student=?, name_student=?, birthday_student=?, gender_student=?, class_student=?, describe_student=?, slug=? where id_student=?`,
+      `update student set mssv_student=?, name_student=?, birthday_student=?, gender_student=?, class_student=?, describe_student=?, contact=?, slug=? where id_student=?`,
       [
         mssv_student,
         data.name_student,
@@ -180,6 +158,7 @@ module.exports = {
         data.gender_student,
         data.class_student,
         data.describe_student,
+        data.contact,
         slug,
         id
       ],

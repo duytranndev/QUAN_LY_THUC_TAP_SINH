@@ -4,10 +4,22 @@
 {{#each students}}
 
     <div class="row">
-        <div class="col-md-1">
+        <div class="col-md-3">
+            Ma sinh vien
+            <h2>{{this.mssv_student}}</h2>
+        </div>
+        <div class="col-md-3">
             <h2>{{this.id_student}}</h2>
         </div>
+        <div class="col-md-3">
+            <h2>{{this.name_student}}</h2>
+        </div>
+        <div class="col-md-6">
+            <img src="../assets/img/{{this.image_student}}" alt="">
+        </div>
     </div>
+
+    
 
 {{/each}}
 

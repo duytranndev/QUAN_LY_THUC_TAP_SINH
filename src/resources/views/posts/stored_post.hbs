@@ -1,0 +1,90 @@
+<div class="table mt-5">
+    <div class="row" style="margin-left: -100px;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nickname</th>
+                    <th scope="col">Tên cong ty</th>
+                    <th scope="col">Dia chi</th>
+                    <th scope="col">Hình ảnh</th>
+                    <th scope="col"></th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each posts}}
+
+                <tr>
+
+                    <td>{{this.id_post}}</td>
+                    <td>{{this.title_post}}</td>
+                    <td>{{this.detail_post}}</td>
+                    <td>{{this.address_enterprise}}</td>
+                    <td><img class="card-img-top" src="../assets/img/{{this.image_enterprise}}" alt=""></td>
+                    <td>
+                        <a href="{{this.id_post}}/edit" class="btn btn-link">Sua</a>
+                        <a href="" class="btn btn-link" data-toggle="modal" data-id={{this.id_post}}
+                           data-enterpirse ={{this.id_enterprise}} data-target="#delete-post-modal">Xóa</a>
+                    </td>
+
+
+                </tr>
+
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="delete-post-modal" tabindex="-1" role="dialog" aria-labelledby="delete-post-modalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="delet-student-modalLabel">Xóa bài viết?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa sinh viên này?</p>
+            </div>
+            <div class="modal-footer">
+                <button id="btn-delete-post" type="button" class="btn btn-primary">Xóa bỏ</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Delete hidden form --}}
+
+{{!-- tao form trong de phuc vu cho viec submit --}}
+<form name="delete-post" class="mt-4" method="POST" ></form>
+{{!-- document.forms['delete-enterprise'] lấy ra thằng form--}} 
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        var postID;
+        var enterpriseID;
+        var deleteForm = document.forms['delete-post'];
+        var btnDeletePost = document.getElementById('btn-delete-post');
+
+        //when dialog confirm clicked
+        $('#delete-post-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            postID = button.data('id');//id này được nạp từ thằng data-id={{this.id_enterprise}}, nó là id
+            enterpriseID = button.data('enterpirse')
+        });
+        
+        btnDeletePost.onclick = function(){
+            deleteForm.action ='/enterprises/' +enterpriseID+'/posts/'+ postID +'?_method=DELETE';
+            deleteForm.submit();//submit form delete
+        };
+    })
+</script>
