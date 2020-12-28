@@ -2,74 +2,62 @@
 const {
   deleteEnterprise,
   getEnterpriseBySlug,
+  createEnterprise,
 } = require("../models/enterprise");
 const { genSaltSync, hashSync } = require("bcrypt");
 const { result } = require("lodash");
 const { error } = require("npmlog");
-const { createCourse, getAllInstructor,getCourse, getCourseByID,getCourseBySlug ,updateCourse, deleteCourse, getCourseById_enter} = require("../models/sourse");
-const { json } = require("body-parser");
+const { createInstructor, getInstructorByID,getInstructorById_enter ,updateInstructor, deleteInstructor, getInstructorBySlug} = require("../models/instructor");
 
-class CourseController {
+class PostController {
   //[GET] enterprises/create
   create(req, res) {
     //get dữ liệu của mấy thằng khác xong rồi đổ vào drop
-    const id = req.params.id_enterprise;
-    getAllInstructor(id , (error, result)=>{
-      if(error){
-        console.log(error);
-        return  res.status(500).json({
-          success:0,
-          message:"database connection error"
-        });
-      }
-      res.render("courses/create_course",{
-        instructors :result
-      })
-    });
-
+    res.render("instructors/create_instructor");
   }
   //[POST] enterprises/create data => enterprises/store => render enterprises/stored
   store(req, res) {
     const id = req.params.id_enterprise;
     const body = req.body;
+    const file = req.files;
     const salt = genSaltSync(10);
-    // createCourse(id, body, (error, results) => {
-    //   if (error) {
-    //     console.log(error);
-    //     return res.status(500).json({
-    //       success: 0,
-    //       message: "Database connection error",
-    //     });
-    //   }
-    //   res.redirect("stored");
-    // });
-    res.json(req.body)
+    createInstructor(id, body, file, (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: 0,
+          message: "Database connection error",
+        });
+      }
+      res.redirect("stored");
+    });
+
     // var test = req.files.image_student;
     // res.json(test.name);
   }
 
   stored(req, res) {
     const id = req.params.id_enterprise;
-    getCourseById_enter(id,(error, results) => {
+    getInstructorById_enter(id,(error, results) => {
       if (error) {
         console.log(error);
         return;
       }
-      return res.render("courses/stored_course", {
-        courses: results,
+      return res.render("instructors/stored_instructor", {
+        instructors: results,
       });
     });
   }
   //[GET] /students/:slug
   show(req, res) {
     const slug = req.params.slug;
-    getCourseBySlug(slug, (err, results) => {
+    getInstructorBySlug(slug, (err, results) => {
       if (err) {
         console.log(err);
         return;
       }
-      return res.render("courses/show_course", {
-        courses: results,
+      return res.render("instructors/show_instructor", {
+        instructors: results,
       });
       // return res.render('courses/show',{
       //     data:results
@@ -79,26 +67,26 @@ class CourseController {
   //[GET] /enterprises
   index(req, res) {
     const id = req.params.id_enterprise;
-    getCourseById_enter(id,(err, results) => {
+    getInstructorById_enter(id,(err, results) => {
       if (err) {
         console.log(err);
         return;
       }
-      return res.render("course", {
-        courses: results,
+      return res.render("instructor", {
+        instructors: results,
       });
     });
   }
 
   edit(req, res) {
-    const id = req.params.id_course;
-    getCourseByID(id, (err, results) => {
+    const id = req.params.id_instructor;
+    getInstructorByID(id, (err, results) => {
       if (err) {
         console.log(err);
         return;
       }
-      return res.render("courses/edit_course", {
-        courses: results,
+      return res.render("instructors/edit_instructor", {
+        instructors: results,
       });
     });
   }
@@ -106,8 +94,9 @@ class CourseController {
   //[PUT] /enterprises/:id_enterprise
   update(req, res) {
     const data = req.body;
-    const id = req.params.id_course;
-    updateCourse(data, id, (err, results) => {
+    const file = req.files;
+    const id = req.params.id_instructor;
+    updateInstructor(data, file, id, (err, results) => {
       if (err) {
         console.log(err);
         return;
@@ -117,8 +106,8 @@ class CourseController {
   }
   //[DELETE] /enterprises/:id_enterprise
   delete(req, res, next) {
-    const id_course = req.params.id_course;
-    deleteCourse(id_course, (err, results) => {
+    const id_instructor = req.params.id_instructor;
+    deleteInstructor(id_instructor, (err, results) => {
       if (err) {
         console.log(err);
         return;
@@ -128,4 +117,4 @@ class CourseController {
   }
 }
 
-module.exports = new CourseController();
+module.exports = new PostController();

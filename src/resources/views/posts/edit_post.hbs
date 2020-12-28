@@ -1,0 +1,24 @@
+{{#each posts}}
+
+
+<h1>heheehehehhehe</h1>
+
+<form class="mt-4" method="POST" action="/enterprises/{{this.id_enterprise}}/posts/{{this.id_post}}?_method=PUT">
+  <div class="form-group">
+    <label>Tilte</label>
+    <input type="text" class="form-control" value="{{this.title_post}}" name="title_post" placeholder="title_post">
+  </div>
+  <div class="form-group">
+    <label>Detail</label>
+    <input type="text" class="form-control" value="{{this.detail_post}}" name="detail_post" placeholder="title_post">
+  </div>
+  <div class="form-group">
+    <label>Ngay tao</label>
+    <input type="date" class="form-control" value="{{this.time_create}}" name="time_create" placeholder="Birth Day">
+  </div>
+  
+  
+  <button type="submit" class="btn btn-primary">Lưu</button>
+</form>
+
+{{/each}}

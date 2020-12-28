@@ -13,7 +13,7 @@ const {
   
   
   
-  class EnterpriseController {
+  class ManageController {
   
       //[GET] enterprises/create
       create(req, res) {
@@ -70,15 +70,16 @@ const {
     }
     //[GET] /enterprises
     index(req, res) {
-      getEnterprise((err, results) => {
-        if (err) {
-          console.log(err);
-          return;
-        }
-        return res.render("enterprise", {
-          enterprises: results,
-        });
-      });
+    //   getEnterprise((err, results) => {
+    //     if (err) {
+    //       console.log(err);
+    //       return;
+    //     }
+    //     return res.render("enterprise", {
+    //       enterprises: results,
+    //     });
+    //   });
+    res.send("Hello day la Manage")
     }
   
     edit(req, res){
@@ -130,5 +131,5 @@ const {
     
   }
   
-  module.exports = new EnterpriseController();
+  module.exports = new ManageController();
   

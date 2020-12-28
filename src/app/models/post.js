@@ -32,10 +32,32 @@ function ChangeToSlug(slug){
 }
 
 
+function ChangToID(id){
+  id = id.replace(/á|à|ả|ạ|ã|ă|ắ|ằ|ẳ|ẵ|ặ|â|ấ|ầ|ẩ|ẫ|ậ/gi, "a");
+  id = id.replace(/é|è|ẻ|ẽ|ẹ|ê|ế|ề|ể|ễ|ệ/gi, "e");
+  id = id.replace(/i|í|ì|ỉ|ĩ|ị/gi, "i");
+  id = id.replace(/ó|ò|ỏ|õ|ọ|ô|ố|ồ|ổ|ỗ|ộ|ơ|ớ|ờ|ở|ỡ|ợ/gi, "o");
+  id = id.replace(/ú|ù|ủ|ũ|ụ|ư|ứ|ừ|ử|ữ|ự/gi, "u");
+  id = id.replace(/ý|ỳ|ỷ|ỹ|ỵ/gi, "y");
+  id = id.replace(/đ/gi, "d");
+  //Xóa các ký tự đặt biệt
+  id = id.replace(
+    /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|/gi,
+    ""
+  );
+  //Xoa khoang trang
+  id = id.replace(/ /gi, "");
+  //Xóa các khoang trang ở đầu và cuối
+  id = "@" + id + "@";
+  id = id.replace(/\@\ |\ \@|\@/gi, "");
+
+  return id;
+}
+
 
 
 module.exports = {
-  getpost: (callBack) => {
+  getPost: (callBack) => {
     db.query(`select * from post`, [], (error, results, fiedls) => {
       if (error) {
         return callBack(error);
@@ -47,6 +69,18 @@ module.exports = {
     db.query(
       `select * from post where slug=?`,
       [slug],
+      (error, results, fiedls) => {
+        if (error) {
+          callBack(error);
+        }
+        return callBack(null, results);
+      }
+    );
+  },
+  getPostById_enter: (id, callBack) => {
+    db.query(
+      `select * from post where id_enterprise=?`,
+      [id],
       (error, results, fiedls) => {
         if (error) {
           callBack(error);
@@ -68,15 +102,16 @@ module.exports = {
     );
   },
 
-  createPost: (data, file, callBack) => {
-    
-    let slug = ChangeToSlug(data.id_post + " " + data.title_post);
+  createPost: (id, data, file, callBack) => {
+
+    let id_post = ChangToID(id+'_'+data.title_post);
+    let slug = ChangeToSlug(id_post + " " + data.title_post);
     let image_name;
     if (file) {
-      let uploadedFile = file.image;
+      let uploadedFile = file.image_post;
       image_name = uploadedFile.name;
       let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
+      image_name = id_post + "." + fileExtension;
 
       if (
         uploadedFile.mimetype === "image/png" ||
@@ -92,15 +127,15 @@ module.exports = {
       }
     }
     db.query(
-      `insert into post (id_post, title_post, detail_post, time_create, image_post, id_enterprise, slug) values(?,?,?,?,?,?,?)`,
+      `insert into post (id_post, title_post, detail_post, time_create, image_post, slug, id_enterprise) values(?,?,?,?,?,?,?)`,
       [
-        data.id_post,
+        id_post,
         data.title_post,
         data.detail_post,
         data.time_create,
         image_name,
-        data.id_enterprise,
-        slug
+        slug,
+        id
       ],
       (error, results, fields) => {
         if (error) {
@@ -111,37 +146,17 @@ module.exports = {
     );
   },
   updatePost: (data, file, id, callBack) => {
-    let slug = ChangeToSlug(data.id_post + " " + data.title_post);
+    let slug = ChangeToSlug(id + " " + data.title_post);
     let image_name;
-    if (file) {
-      let uploadedFile = file.image;
-      image_name = uploadedFile.name;
-      let fileExtension = uploadedFile.mimetype.split("/")[1];
-      image_name = s_name + "." + fileExtension;
-
-      if (
-        uploadedFile.mimetype === "image/png" ||
-        uploadedFile.mimetype === "image/jpeg" ||
-        uploadedFile.mimetype === "image/gif"
-      ) {
-        // upload the file to the /public/assets/img directory
-        uploadedFile.mv(`src/public/assets/img/${image_name}`, (err) => {
-          if (err) {
-            return;
-          }
-        });
-      }
-    }
+    
     db.query(
-      `update post set title_post=?, detail_post=?, time_create=?, image_post=?, id_enterprise=?, slug=? where id_post=?`,
+      `update post set title_post=?, detail_post=?, time_create=?,  slug=? where id_post=?`,
       [
         data.title_post,
         data.detail_post,
         data.time_create,
-        image_name,
-        data.id_enterprise,
         slug,
-        data.id_post
+        id
       ],
       (error, results, fields) => {
         if (error) {
@@ -154,7 +169,7 @@ module.exports = {
   deletePost: (data, callBack) => {
     db.query(
       `delete from post where id_post=?`,
-      [data.id_post],
+      [data],
       (error, results, fiedls) => {
         if (error) {
           callBack(error);

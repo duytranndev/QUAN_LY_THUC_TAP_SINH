@@ -1,0 +1,29 @@
+<form class="mt-4" method="POST" action="store" enctype="multipart/form-data">
+
+  <div class="form-group">
+    <label>Name course</label>
+    <input type="text" class="form-control" name="name_course" placeholder="name_course">
+  </div>
+  <div class="form-group">
+    <label>Noi dung</label>
+    <input type="text" class="form-control" name="content" placeholder="content">
+  </div>
+  <div class="form-group">
+    <label>Time Train</label>
+    <input type="text" class="form-control" name="time_train" placeholder="time_train">
+  </div>
+  <select name="id_instructor" id="id_instructor" onchange="myFunction()">
+    {{#each instructors}}
+    <option value={{this.id_instructor}}>{{this.name_instructor}}</option>
+    {{/each}}
+  </select>
+  <button type="submit" class="btn btn-primary">Thêm</button>
+
+</form>`
+
+<script>
+  function myFunction() {
+    var x = document.getElementById("id_instructor").value;
+    console.log("You selected: " + x)
+  }
+</script>

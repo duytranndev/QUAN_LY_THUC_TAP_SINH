@@ -23,7 +23,6 @@ class StudentController {
   //[POST] students/create data => students/store => render students/stored
   store(req, res) {
 
-    
     const body = req.body;
     const file = req.files
     const salt = genSaltSync(10);

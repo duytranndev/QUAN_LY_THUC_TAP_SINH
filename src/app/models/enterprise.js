@@ -41,7 +41,7 @@ function ChangToID(id){
   id = id.replace(/đ/gi, "d");
   //Xóa các ký tự đặt biệt
   id = id.replace(
-    /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|_/gi,
+    /\`|\~|\!|\@|\#|\||\$|\%|\^|\&|\*|\(|\)|\+|\=|\,|\.|\/|\?|\>|\<|\'|\"|\:|\;|/gi,
     ""
   );
   //Xoa khoang trang
@@ -91,7 +91,7 @@ module.exports = {
 
   createEnterprise: (data, file, callBack) => {
     
-    let id_enterprise = ChangToID(data.nickname_enterprise+ data.name_enterprise);
+    let id_enterprise = ChangToID(data.nickname_enterprise+'_'+ data.name_enterprise.split(' ').slice(-1));
     let slug = ChangeToSlug(id_enterprise + " " + data.name_enterprise);
     let image_name;
     if (file) {
@@ -114,7 +114,7 @@ module.exports = {
       }
     }
     db.query(
-      `insert into enterprise (id_enterprise, nickname_enterprise,name_enterprise, address_enterprise, describe_enterprise, image_enterprise, slug) values(?,?,?,?,?,?,?)`,
+      `insert into enterprise (id_enterprise, nickname_enterprise,name_enterprise, address_enterprise, describe_enterprise, image_enterprise, contact, slug) values(?,?,?,?,?,?,?,?)`,
       [
         id_enterprise,
         data.nickname_enterprise,
@@ -122,6 +122,7 @@ module.exports = {
         data.address_enterprise,
         data.describe_enterprise,
         image_name,
+        data.contact,
         slug
       ],
       (error, results, fields) => {
@@ -133,7 +134,7 @@ module.exports = {
     );
   },
   updateEnterprise: (data, file, id ,callBack) => {
-
+    let slug = ChangeToSlug(id + " " + data.name_enterprise);
     let image_name;
     if (file) {
       let uploadedFile = file.image;
@@ -155,12 +156,14 @@ module.exports = {
       }
     }
     db.query(
-      `update enterprise set nickname_enterprise=?, name_enterprise=?, address_enterprise=?, describe_enterprise=? where id_enterprise=?`,
+      `update enterprise set nickname_enterprise=?, name_enterprise=?, address_enterprise=?, contact=?, describe_enterprise=?, slug=? where id_enterprise=?`,
       [
         data.nickname_enterprise,
         data.name_enterprise,
         data.address_enterprise,
+        data.contact,
         data.describe_enterprise,
+        slug,
         id
       ],
       (error, results, fields) => {
