@@ -9,6 +9,7 @@ function route(app) {
   app.use("/enterprises",enterpriseController);
   app.use("/admin",adminRouter);
   app.use("/students",studentRouter);
+  app.use("/home",homeController);
   app.use("/",homeController);
   
 }

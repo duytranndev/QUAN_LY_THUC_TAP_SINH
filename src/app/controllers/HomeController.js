@@ -3,14 +3,19 @@
 const { mutipleMongooseToObject } = require('../../util/mongoose')
 
 class HomeController {
-    //[GET] /news
-    index(req, res, next) {
-        res.send("XIN CHAO DAY LA TRANG CHU");
+    
+    services(req,res){
+        res.render('services')
     }
-
+    about(req, res){
+        res.render('about')
+    }
     //[GET] /search
     search(req, res) {
         res.render('search');
+    }//[GET] /news
+    index(req, res, next) {
+        res.render('home')
     }
 }
 
