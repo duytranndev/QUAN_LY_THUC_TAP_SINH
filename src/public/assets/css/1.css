@@ -1,0 +1,31 @@
+*{
+    margin: 0; padding: 0;
+}
+.posts{
+    margin-left: 2%;
+    clear: both;
+    height: 1200px;
+}
+.tintuc{
+    float: left;
+    width: 45%;
+    height: 280px;
+    margin: 0.3% 1%;
+}
+.tintuc .left img{
+    float: left;
+    margin-right: 3%;
+}
+.tintuc .right h3{
+    color: black;
+}
+.tintuc .right .xemthem{
+    color: rgba(78, 78, 78, 0.801);
+}
+.tintuc .right .xemthem:hover{
+    color: rgb(39, 38, 38);
+}
+
+.active{
+    color: aqua;
+}

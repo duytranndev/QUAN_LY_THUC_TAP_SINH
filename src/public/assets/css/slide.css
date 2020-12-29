@@ -1,0 +1,59 @@
+/* slide */
+.boc{
+    width: 100%;
+    height: 700px;
+    position: relative;
+}
+.slidewrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    background: black;
+    perspective: 1200px;
+}
+
+.slides {
+    width: 100%;
+    height: 100%;
+}
+
+ul {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+li {
+    width: 100%;
+    height: 100%;
+    /* background-size: cover; */
+    background-size: 100% 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+.active {
+    opacity: 1;
+}
+
+.nutchuyen {
+    position: absolute;
+    bottom: 5%;
+    left: 45%;
+    z-index: 5;
+}
+
+.nutchuyen b {
+    font-size: 50px;
+    color: blanchedalmond;
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.5s;
+}
+
+.nutchuyen b:hover {
+    color: rosybrown;
+}
