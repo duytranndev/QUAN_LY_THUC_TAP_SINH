@@ -1,0 +1,32 @@
+body {
+  color: aqua;
+}
+
+.main {
+  margin-top: 60px;
+  background-color: cadetblue;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+.main .row .col-sm-3 .menu ul {
+  width: 200px;
+  padding: 0;
+  margin-left: 10px;
+}
+
+.main .row .col-sm-3 .menu ul li {
+  width: auto;
+  line-height: 50px;
+  font-size: 23px;
+  text-decoration: none;
+  border-bottom: 2px solid #e8e8e8;
+  padding: 0 1em;
+}
+
+.main .row .col-sm-3 .menu ul li a {
+  text-decoration: none;
+  color: black;
+}
+/*# sourceMappingURL=ChiTietSinhVien.css.map */

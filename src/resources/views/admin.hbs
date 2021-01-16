@@ -1,0 +1,320 @@
+<link rel="stylesheet" href="/assets/css/style-starter.css">
+<link rel="stylesheet" href="/assets/css/Truong_detail.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        width: 20%;
+        height: 100%;
+
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    .img_student {
+        height: 230px;
+        width: 100%;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current "tab button" class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        width: 70%;
+        border-left: none;
+        height: 300px;
+    }
+</style>
+
+<header id="site-header" class="fixed-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-dark stroke">
+            <h1><a class="navbar-brand" href="index.html">
+                    <span class="sub-log">KCNTT</span>
+                </a></h1>
+            <!-- if logo is image enable this   
+      <a class="navbar-brand" href="#index.html">
+          <img src="image-path" alt="Your logo" title="Your logo" style="height:35px;" />
+      </a> -->
+            <button class="navbar-toggler  collapsed bg-gradient" type="button" data-toggle="collapse"
+                data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon fa icon-expand fa-bars"></span>
+                <span class="navbar-toggler-icon fa icon-close fa-times"></span>
+                </span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mx-lg-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link active" href="/home">Trang Chủ <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/about">Giới Thiệu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/services">Tin Tức</a>
+                    </li>
+                    <li class="top-quote ml-lg-4 mt-lg-0 mt-3">
+                        <a href="/admin" class="btn btn-style btn-primary">Admin</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- toggle switch for light and dark theme -->
+
+            <div class="mobile-position">
+                <nav class="navigation">
+                    <div class="theme-switch-wrapper">
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox">
+                            <div class="mode-container py-1">
+                                <i class="gg-sun"></i>
+                                <i class="gg-moon"></i>
+                            </div>
+                        </label>
+                    </div>
+                </nav>
+            </div>
+            <!-- //toggle switch for light and dark theme -->
+        </nav>
+    </div>
+</header>
+<div class="tab">
+    <a href="/admin/students/stored"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Quản Lý Sinh
+            Viên</button></a>
+    <a href="/admin/enterprises/stored"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Quản Lý Doanh
+            Nghiệp</button></a>
+    <a href="/admin/students/create"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Thêm Sinh
+            Viên</button></a>
+
+</div>
+<div class="container">
+    <div class="row">
+        {{#each students}}
+        <div class="col-md-3">
+            <div class="card">
+                <a href="/students/{{this.slug}}">
+                    <img class="img_student" src="../assets/img/{{this.image_student}}" alt="">
+                </a>
+                <div class="card-body">
+                    <a href="/students/{{this.slug}}">
+                        <h5 class="card-title">{{this.name_student}}</h5>
+                    </a>
+                    <p style="color: black;">{{this.mssv}}</p>
+                    <h2 class="mb-0">
+                        <button class="btn btn-link" type="button" data-toggle="collapse"
+                            data-target="#{{this.id_student}}" aria-expanded="true" aria-controls="collapseOne">
+                            Đọc mô tả
+                        </button>
+                    </h2>
+                    <div id="{{this.id_student}}" class="collapse " aria-labelledby="headingOne"
+                        data-parent="#accordionExample">
+                        {{this.describe_student}}
+                    </div>
+                    <p class="card-text"></p>
+                    <a href="/students/{{this.slug}}" class="btn btn-primary">Chi Tiết</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+<section class="w3l-footer-29-main">
+    <div class="footer-29 py-5">
+        <div class="container py-lg-4">
+            <div class="row footer-top-29">
+                <div class="footer-list-29 col-lg-4">
+                    <h6 class="footer-title-29">Về chúng tôi</h6>
+                    <p>Đào tạo, nghiên cứu gắn liền với khoa học và công nghệ nhằm tạo ra những sinh viên và học viên có
+                        lòng yêu nước, có phẩm chất Nhân văn mang đậm bản sắc Việt Nam, có ý thức sinh hoạt cộng đồng,
+                        có sức khỏe, có năng lực và kỹ năng toàn diện, tự tin, năng động, sáng tạo và trở thành công dân
+                        khởi nghiệp mang tính toàn cầu. </p>
+                    <div class="main-social-footer-29 mt-4">
+                        <a href="#facebook" class="facebook"><span class="fa fa-facebook"></span></a>
+                        <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
+                        <a href="#instagram" class="instagram"><span class="fa fa-instagram"></span></a>
+                        <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin"></span></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6 col-sm-4 footer-list-29 footer-2 mt-lg-0 mt-5">
+
+                    <ul>
+                        <h6 class="footer-title-29">Liên kết</h6>
+                        <li><a href="/">Trang chủ</a></li>
+                        <li><a href="/home/about">Về chúng tôi</a></li>
+                        <li><a href="/home/services">Dịch vụ</a></li>
+                        <li><a href="#"> Bài đăng</a></li>
+                        <li><a href="/home/contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 footer-list-29 footer-3 mt-lg-0 mt-5">
+
+                    <ul>
+                        <h6 class="footer-title-29">Services</h6>
+                        <li><a href="#team">Construction Manage</a></li>
+                        <li><a href="#insta">Architecture & Building</a></li>
+                        <li><a href="#careers">Xây dựng hợp đồng</a></li>
+                        <li><a href="#help">Trợ giúp & Hỗ trợ</a></li>
+                    </ul>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-8 footer-list-29 footer-1 mt-lg-0 mt-5">
+                    <h6 class="footer-title-29">Liên hệ</h6>
+                    <ul>
+                        <li>
+                            <p><span class="fa fa-map-marker"></span> 254 Nguyễn Văn Linh, Quận Thanh Khê - Tp. Đà Nẵng
+                            </p>
+                        </li>
+                        <li><a href="tel:+7-800-999-800"><span class="fa fa-phone"></span> +(21)-255-999-8888</a></li>
+                        <li><a href="mailto:industrie@mail.com" class="mail"><span class="fa fa-envelope-open-o"></span>
+                                industrie@mail.com</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12 footer-list-29 footer-4 mt-5">
+                    <div class="column1 align-self">
+                        <h6 class="footer-title-29 mb-1">Theo dõi bản tin của chúng tôi </h6>
+                        <p>Nhập email của bạn và nhận tin tức mới nhất từ ​​chúng tôi.</p>
+                    </div>
+                    <div class="column1">
+                        <form action="#" class="subscribe" method="post">
+                            <input type="email" name="email" placeholder="Địa chỉ email của bạn" required="">
+                            <button><span class="fa fa-paper-plane-o pr-1"></span></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="w3l-footer-29-main w3l-copyright">
+    <div class="container">
+        <div class="bottom-copies">
+            <p class="copy-footer-29 text-center">Copyright © 2020 - Bản quyền thuộc về <a href="" target="_blank">
+                    WEBSITE QUẢN LÝ THỰC TẬP SINH</a></p>
+        </div>
+    </div>
+
+    <!-- move top -->
+    <button onclick="topFunction()" id="movetop" title="Go to top">
+        <span class="fa fa-angle-up"></span>
+    </button>
+    <script src="/assets/js/jquery-3.3.1.min.js"></script>
+    <script src="/assets/js/theme-change.js"></script>
+    <!-- libhtbox -->
+    <script src="/assets/js/lightbox-plus-jquery.min.js"></script>
+    <!-- libhtbox -->
+    <script src="/assets/js/owl.carousel.js"></script>
+    <!-- script for banner slider-->
+    <script>
+        $(document).ready(function () {
+            $('.owl-one').owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                responsiveClass: true,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplaySpeed: 1000,
+                autoplayHoverPause: false,
+                responsive: {
+                    0: {
+                        items: 1,
+                        nav: false
+                    },
+                    480: {
+                        items: 1,
+                        nav: false
+                    },
+                    667: {
+                        items: 1,
+                        nav: true
+                    },
+                    1000: {
+                        items: 1,
+                        nav: true
+                    }
+                }
+            })
+        })
+    </script>
+    <!-- //script -->
+    <!-- disable body scroll which navbar is in active -->
+    <script>
+        $(function () {
+            $('.navbar-toggler').click(function () {
+                $('body').toggleClass('noscroll');
+            })
+        });
+    </script>
+    <!-- disable body scroll which navbar is in active -->
+
+    <!--/MENU-JS-->
+    <script>
+        $(window).on("scroll", function () {
+            var scroll = $(window).scrollTop();
+
+            if (scroll >= 80) {
+                $("#site-header").addClass("nav-fixed");
+            } else {
+                $("#site-header").removeClass("nav-fixed");
+            }
+        });
+
+        //Main navigation Active Class Add Remove
+        $(".navbar-toggler").on("click", function () {
+            $("header").toggleClass("active");
+        });
+        $(document).on("ready", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+            $(window).on("resize", function () {
+                if ($(window).width() > 991) {
+                    $("header").removeClass("active");
+                }
+            });
+        });
+    </script>
+    <!--//MENU-JS-->
+
+    <script src="/assets/js/bootstrap.min.js"></script>

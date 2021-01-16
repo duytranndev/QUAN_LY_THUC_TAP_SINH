@@ -1,0 +1,17 @@
+body {
+  color: aqua;
+}
+
+.main {
+  margin-top: 60px;
+  background-color: cadetblue;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}
+
+.nut {
+  margin-left: 42px;
+  width: 90px;
+}
+/*# sourceMappingURL=Truong_form.css.map */

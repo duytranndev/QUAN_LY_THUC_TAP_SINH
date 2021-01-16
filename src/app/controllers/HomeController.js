@@ -1,21 +1,23 @@
 //Import
 
-const { mutipleMongooseToObject } = require('../../util/mongoose')
+const { mutipleMongooseToObject } = require('../../util/mongoose');
 
 class HomeController {
-    
-    services(req,res){
-        res.render('services')
+    contact(req, res) {
+        res.render('contact');
     }
-    about(req, res){
-        res.render('about')
+    services(req, res) {
+        res.render('services');
+    }
+    about(req, res) {
+        res.render('about');
     }
     //[GET] /search
     search(req, res) {
         res.render('search');
-    }//[GET] /news
+    } //[GET] /news
     index(req, res, next) {
-        res.render('home')
+        res.render('home');
     }
 }
 

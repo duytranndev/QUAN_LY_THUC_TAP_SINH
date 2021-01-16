@@ -14063,7 +14063,6 @@ html {
   margin: 0;
   padding: 0;
   color: var(--para-color);
-  background-color: var(--bg-color);
   font-family: 'Barlow', sans-serif;
 }
 
@@ -14175,6 +14174,7 @@ p.white {
 /*-- container --*/
 .container {
   width: 100%;
+  bottom: 0;
   padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
