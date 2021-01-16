@@ -88,11 +88,9 @@ module.exports = {
 
     createEnterprise: (data, file, callBack) => {
         let id_enterprise = ChangToID(
-            data.nickname_enterprise +
-                '_' +
-                data.name_enterprise.split(' ').slice(-1),
+            data.director + '_' + data.name.split(' ').slice(-1),
         );
-        let slug = ChangeToSlug(id_enterprise + ' ' + data.name_enterprise);
+        let slug = ChangeToSlug(id_enterprise + ' ' + data.name);
         let image_name;
         if (file) {
             let uploadedFile = file.image_enterprise;
@@ -117,13 +115,13 @@ module.exports = {
             }
         }
         db.query(
-            `insert into enterprise (id_enterprise, nickname_enterprise,name_enterprise, address_enterprise, describe_enterprise, image_enterprise, contact, slug) values(?,?,?,?,?,?,?,?)`,
+            `insert into enterprise (id_enterprise, director,name, address, describe_enterprise, image_enterprise, contact, slug) values(?,?,?,?,?,?,?,?)`,
             [
                 id_enterprise,
-                data.nickname_enterprise,
-                data.name_enterprise,
-                data.address_enterprise,
-                data.describe_enterprise,
+                data.director,
+                data.name,
+                data.address,
+                data.describe,
                 image_name,
                 data.contact,
                 slug,
@@ -137,7 +135,7 @@ module.exports = {
         );
     },
     updateEnterprise: (data, file, id, callBack) => {
-        let slug = ChangeToSlug(id + ' ' + data.name_enterprise);
+        let slug = ChangeToSlug(id + ' ' + data.name);
         let image_name;
         if (file) {
             let uploadedFile = file.image;
@@ -162,11 +160,11 @@ module.exports = {
             }
         }
         db.query(
-            `update enterprise set nickname_enterprise=?, name_enterprise=?, address_enterprise=?, contact=?, describe_enterprise=?, slug=? where id_enterprise=?`,
+            `update enterprise set director=?, name=?, address=?, contact=?, describe_enterprise=?, slug=? where id_enterprise=?`,
             [
-                data.nickname_enterprise,
-                data.name_enterprise,
-                data.address_enterprise,
+                data.director,
+                data.name,
+                data.address,
                 data.contact,
                 data.describe_enterprise,
                 slug,
@@ -193,29 +191,3 @@ module.exports = {
         );
     },
 };
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
-
-const Enterprise = new Schema(
-    {
-        name: { type: String, maxlength: 255, required: true },
-        dia_chi: { type: String, maxlength: 255 },
-        mo_ta: { type: String, maxlength: 255 },
-        image: { type: String, maxlength: 255 },
-        lien_he: { type: String, maxlength: 255 },
-        ngay_thanh_lap: { type: String, maxlength: 255 },
-        giam_doc: { type: String, maxlength: 255 },
-        slug: { type: String, slug: 'name', unique: true },
-    },
-    {
-        timestamps: true,
-    },
-);
-
-module.exports = mongoose.model('Enterprise', Enterprise);

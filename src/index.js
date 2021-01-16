@@ -11,11 +11,11 @@ const methodOverride = require('method-override');
 const app = express();
 const port = 3000;
 const fs = require('fs');
-
+const session = require('express-session');
 const route = require('./routes/index');
 const db = require('./config/db/dbmongo');
 
-db.connect();
+//db.connect();
 
 // db.connect((err)=>{
 //     if(err){
@@ -37,7 +37,13 @@ app.use(
         limits: { fileSize: 50 * 1024 * 1024 },
     }),
 );
-
+app.use(
+    session({
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true,
+    }),
+);
 app.use(
     express.urlencoded({
         extended: true,

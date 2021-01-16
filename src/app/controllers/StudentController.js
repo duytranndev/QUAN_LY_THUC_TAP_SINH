@@ -1,5 +1,3 @@
-//Import
-const Student = require('../models/test');
 const {
     getStudent,
     getStudentBySlug,
@@ -67,22 +65,15 @@ class StudentController {
     }
     //[GET] /students
     index(req, res, next) {
-        Student.find({})
-            .then((students) => {
-                res.render('student', {
-                    students: students,
-                });
-            })
-            .catch(next);
-        // getStudent((err, results) => {
-        //   if (err) {
-        //     console.log(err);
-        //     return;
-        //   }
-        //   return res.render("student", {
-        //     students: results,
-        //   });
-        // });
+        getStudent((err, results) => {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            return res.render('student', {
+                students: results,
+            });
+        });
     }
 
     edit(req, res) {

@@ -147,12 +147,12 @@ module.exports = {
         var slug = ChangeToSlug(data.name_student + data.mssv_student);
 
         db.query(
-            `update student set mssv_student=?, name_student=?, class_student=?, sdt=?, describe_student=?, slug=? where id_student=?`,
+            `update student set mssv_student=?, name_student=?, class_student=?, contact=?, describe_student=?, slug=? where id_student=?`,
             [
                 data.mssv_student,
                 data.name_student,
                 data.class_student,
-                data.sdt,
+                data.contact,
                 data.describe_student,
                 slug,
                 id,
@@ -178,32 +178,3 @@ module.exports = {
         );
     },
 };
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
-
-const Student = new Schema(
-    {
-        name: { type: String, required: true },
-        mo_ta: { type: String, maxlength: 255 },
-        ngay_sinh: { type: String, maxlength: 255 },
-        lop: { type: String, maxlength: 255 },
-        gioi_tinh: { type: String, maxlength: 255 },
-        mssv: { type: String, maxlength: 255 },
-        lien_he: { type: String, maxlength: 255 },
-        email: { type: String, maxlength: 255 },
-        image: { type: String, maxlength: 255 },
-        idKhoa: { type: String, maxlength: 255 },
-        slug: { type: String, slug: 'name', unique: true },
-    },
-    {
-        timestamps: true,
-    },
-);
-
-module.exports = mongoose.model('Student', Student);

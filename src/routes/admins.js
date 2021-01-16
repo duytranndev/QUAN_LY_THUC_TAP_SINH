@@ -12,9 +12,9 @@ const enterpriseController = require('../app/controllers/EnterpriseController');
 //for STUDENT
 router.get('/students/create', studentController.create);
 router.get('/students/stored', studentController.stored);
-router.get('/students/:id/edit', studentController.edit);
-router.put('/students/:id', studentController.update);
-router.delete('/students/:id', studentController.delete);
+router.get('/students/:id_student/edit', studentController.edit);
+router.put('/students/:id_student', studentController.update);
+router.delete('/students/:id_student', studentController.delete);
 router.post('/students/store', studentController.store);
 router.get('/students/:slug', studentController.show);
 router.get('/students', studentController.index);
