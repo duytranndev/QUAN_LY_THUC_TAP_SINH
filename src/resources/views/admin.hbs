@@ -1,0 +1,189 @@
+<link rel="stylesheet" href="/assets/css/style-starter.css">
+<link rel="stylesheet" href="/assets/css/Truong_detail.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    * {
+        box-sizing: border-box
+    }
+
+    body {
+        font-family: "Lato", sans-serif;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Style the tab */
+    .tab {
+        float: left;
+        border: 1px solid #ccc;
+        width: 20%;
+        height: 100%;
+
+    }
+
+    /* Style the buttons inside the tab */
+    .tab button {
+        display: block;
+        background-color: inherit;
+        color: black;
+        padding: 22px 16px;
+        width: 100%;
+        border: none;
+        outline: none;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    .img_student {
+        height: 230px;
+        width: 100%;
+    }
+
+    /* Change background color of buttons on hover */
+    .tab button:hover {
+        background-color: #ddd;
+    }
+
+    /* Create an active/current "tab button" class */
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    /* Style the tab content */
+    .tabcontent {
+        float: left;
+        padding: 0px 12px;
+        border: 1px solid #ccc;
+        width: 70%;
+        border-left: none;
+        height: 300px;
+    }
+</style>
+
+
+<div class="banner" style="background-image: url(/assets/images/dtu.jpg);
+    height: 700px;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    ">
+
+</div>
+<div class="tab">
+    <a href="/admin/students/stored"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Quản Lý Sinh Viên</button></a>
+    <a href="/admin/enterprises/stored"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Quản Lý Doanh Nghiệp</button></a>
+    <a href="/admin/students/create"><button class="tablinks" onclick="openCity(event, 'Tokyo')">Thêm Sinh Viên</button></a>
+
+</div>
+<div class="container">
+    <div class="row">
+        {{#each students}}
+        <div class="col-md-3">
+            <div class="card">
+                <a href="/students/{{this.slug}}">
+                    <img class="img_student" src="{{this.image}}" alt="">
+                </a>
+                <div class="card-body">
+                    <a href="/students/{{this.slug}}">
+                        <h5 class="card-title">{{this.name}}</h5>
+                    </a>
+                    <p style="color: black;">{{this.mssv}}</p>
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    data-target="#{{this._id}}" aria-expanded="true" aria-controls="collapseOne">
+                                    Đọc mô tả
+                                </button>
+                            </h2>
+                        <div id="{{this._id}}" class="collapse " aria-labelledby="headingOne"
+                            data-parent="#accordionExample">
+                                {{this.describe}}
+                        </div>
+                    <p class="card-text"></p>
+                    <a href="/students/{{this.slug}}" class="btn btn-primary">Chi Tiết</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>
+
+
+<script>
+    window.onscroll = function () {
+        scrollFunction()
+    };
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            document.getElementById("movetop").style.display = "block";
+        } else {
+            document.getElementById("movetop").style.display = "none";
+        }
+    }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+</section>
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/theme-change.js"></script>
+<script src="/assets/js/lightbox-plus-jquery.min.js"></script>
+<script src="/assets/js/owl.carousel.js"></script>
+<script src="/assets/js/jquery.waypoints.min.js"></script>
+<script src="/assets/js/jquery.countup.js"></script>
+<script>
+    $('.counter').countUp();
+</script>
+<script>
+    $(function () {
+        $('.navbar-toggler').click(function () {
+            $('body').toggleClass('noscroll');
+        })
+    });
+</script>
+<script>
+    $(window).on("scroll", function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 80) {
+            $("#site-header").addClass("nav-fixed");
+        } else {
+            $("#site-header").removeClass("nav-fixed");
+        }
+    });
+    $(".navbar-toggler").on("click", function () {
+        $("header").toggleClass("active");
+    });
+    $(document).on("ready", function () {
+        if ($(window).width() > 991) {
+            $("header").removeClass("active");
+        }
+        $(window).on("resize", function () {
+            if ($(window).width() > 991) {
+                $("header").removeClass("active");
+            }
+        });
+    });
+</script>
+
+{{!--
+<script>
+    function openCity(evt, cityName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    document.getElementById("defaultOpen").click();
+</script> --}}

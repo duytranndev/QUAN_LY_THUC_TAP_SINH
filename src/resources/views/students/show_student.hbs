@@ -1,27 +1,64 @@
+<style>
+    .img_student {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+<div class="banner" style="background-image: url(/assets/images/dtu.jpg);
+    height: 700px;
+    width: 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    ">
 
-<div class="container mt-4">
+</div>
 
-{{#each students}}
+<div class="container">
 
+{{students}}
+{{!-- 
     <div class="row">
-        <div class="col-md-3">
-            Ma sinh vien
-            <h2>{{this.mssv_student}}</h2>
-        </div>
-        <div class="col-md-3">
-            <h2>{{this.id_student}}</h2>
-        </div>
-        <div class="col-md-3">
-            <h2>{{this.name_student}}</h2>
+        {{#each students}}
+        <div class="col-md-6">
+            <img class="img_student" src="../assets/img/{{this.image_student}}" alt="">
         </div>
         <div class="col-md-6">
-            <img src="../assets/img/{{this.image_student}}" alt="">
+            <div class="row">
+                <div class="col-md-12" style="display: flex;">
+                    <h2>Mã sinh viên:</h2>
+                    <h2>{{this.mssv_student}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="display: flex;">
+                    <h2>Ngày sinh: </h2>
+                    <h2>{{this.birthday_student}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="display: flex;">
+                    <h2>Lớp: </h2>
+                    <h2>{{this.class_student}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="display: flex;">
+                    <h2>Thông tin liên lạc: </h2>
+                    <h2>{{this.contact}}</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Mô tả:</h2>
+                    <h2>{{this.describe_student}}</h2>
+                </div>
+            </div>
         </div>
-    </div>
 
-    
+        {{/each}}
+    </div> --}}
 
-{{/each}}
 
 </div>
 

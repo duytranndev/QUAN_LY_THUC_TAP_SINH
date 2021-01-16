@@ -1,43 +1,54 @@
-<div class="table mt-5">
-    <div class="row" style="margin-left: -100px;">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">MSSV</th>
-                    <th scope="col">Tên sinh viên</th>
-                    <th scope="col">Lớp</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col"></th>
+<style>
+    .img_student {
+        width: 100%;
+        height: 500px;
+    }
+    .stored{
+        margin-top: 200px;
+    }
+</style>
 
+<div class="container stored">
+    <div class="table mt-5">
+        <div class="row" style="margin-left: -100px;">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="1">Mã sinh viên</th>
+                        <th scope="col">Họ tên sinh</th>
+                        <th scope="col">Ngày sinh</th>
+                        <th scope="col">Số điện thoại</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each students}}
+                    <tr>
+                        <td>{{this.mssv}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.birthday}}</td>
+                        <td>{{this.contact}}</td>
 
-                </tr>
-            </thead>
-            <tbody>
-                {{#each students}}
+                        
 
-                <tr>
+                        <td>
 
-                    <td>{{this.id_student}}</td>
-                    <td>{{this.mssv_student}}</td>
-                    <td>{{this.name_student}}</td>
-                    <td>{{this.class_student}}</td>
-                    
-                    <td><img class="card-img-top" src="../assets/img/{{this.image_student}}" alt=""></td>
-                    <td>
-                        <a href="/students/{{this.id_student}}/edit" class="btn btn-link">Sua</a>
-                        <a href="" class="btn btn-link" data-toggle="modal" data-id={{this.id_student}}
-                            data-target="#delet-student-modal">Xóa</a>
-                    </td>
+                            <a href="/admin/students/{{this._id}}/edit" class="btn btn-link"><i class="fas fa-edit"></i></a>
+                            <a href="" class="btn btn-link" data-toggle="modal" data-id={{this._id}}
+                                data-target="#delet-student-modal"><i class="fas fa-trash-alt"></i></a>
 
-
-                </tr>
-
-                {{/each}}
-            </tbody>
-        </table>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
     </div>
+
 </div>
+
+
+
 
 
 <!-- Modal -->
@@ -66,8 +77,8 @@
 {{!-- Delete hidden form --}}
 
 {{!-- tao form trong de phuc vu cho viec submit --}}
-<form name="delete-student" class="mt-4" method="POST" ></form>
-{{!-- document.forms['delete-student'] lấy ra thằng form--}} 
+<form name="delete-student" class="mt-4" method="POST"></form>
+{{!-- document.forms['delete-student'] lấy ra thằng form--}}
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -80,12 +91,40 @@
         $('#delet-student-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget);
             studentID = button.data('id');//id này được nạp từ thằng data-id={{this.id_student}}, nó là id
-            
+
         });
-        
-        btnDeleteStudent.onclick = function(){
-            deleteForm.action ='/students/' +studentID+'?_method=DELETE';
+
+        btnDeleteStudent.onclick = function () {
+            deleteForm.action = '/admin/students/' + studentID + '?_method=DELETE';
             deleteForm.submit();//submit form delete
         };
     })
 </script>
+
+
+
+<script src="/assets/js/jquery-3.3.1.min.js"></script>
+
+<script src="/assets/js/theme-change.js"></script>
+
+<!-- js for portfolio lightbox -->
+<!-- libhtbox -->
+<script src="/assets/js/lightbox-plus-jquery.min.js"></script>
+<!-- libhtbox -->
+<script src="/assets/js/owl.carousel.js"></script>
+<!-- script for testimonials -->
+
+<!-- //script for testimonials -->
+<!-- stats number counter-->
+<script src="/assets/js/jquery.waypoints.min.js"></script>
+<script src="/assets/js/jquery.countup.js"></script>
+
+<!-- //stats number counter -->
+
+<!-- disable body scroll which navbar is in active -->
+
+<!--//MENU-JS-->
+
+<script src="/assets/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />

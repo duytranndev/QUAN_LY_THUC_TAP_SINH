@@ -7,8 +7,9 @@ const homeController = require('../app/controllers/HomeController');
 
 router.get('/search', homeController.search);
 //newController.index;
-router.get('/services',homeController.services)
-router.get('/about',homeController.about)
+router.get('/contact', homeController.contact);
+router.get('/services', homeController.services);
+router.get('/about', homeController.about);
 router.get('/', homeController.index);
 
 module.exports = router;
