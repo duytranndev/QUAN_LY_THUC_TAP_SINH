@@ -1,267 +1,470 @@
-<div class="table mt-5">
-    <div class="row" style="margin-left: -100px;">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nickname</th>
-                    <th scope="col">Tên cong ty</th>
-                    <th scope="col">Dia chi</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col"></th>
+<style>
+    body {
+        background: #eeeded;
+    }
+
+    .card {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+        transition: all 0.2s ease-in-out;
+        box-sizing: border-box;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        background-color: #FFF;
+    }
+
+    .card:hover {
+        box-shadow: 0 5px 5px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .card>.card-inner {
+        padding: 10px;
+    }
+
+    .card .header h2,
+    h3 {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+
+    .card .header {
+        margin-bottom: 5px;
+    }
+
+    .card img {
+        width: 100%;
+    }
+</style>
 
 
-                </tr>
-            </thead>
-            <tbody>
-                {{#each instructors}}
-
-                <tr>
-
-                    <td>{{this.id_instructor}}</td>
-                    <td>{{this.title_post}}</td>
-                    <td>{{this.detail_post}}</td>
-                    <td>{{this.address_enterprise}}</td>
-                    <td><img class="card-img-top" src="../assets/img/{{this.image_enterprise}}" alt=""></td>
-                    <td>
-                        <a href="{{this.id_instructor}}/edit" class="btn btn-link">Sua</a>
-                        <a href="" class="btn btn-link" data-toggle="modal" data-id={{this.id_instructor}}
-                           data-enterpirse ={{this.id_enterprise}} data-target="#delete-instructor-modal">Xóa</a>
-                    </td>
 
 
-                </tr>
-
-                {{/each}}
-            </tbody>
-        </table>
-    </div>
-</div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="delete-instructor-modal" tabindex="-1" role="dialog" aria-labelledby="delete-instructor-modalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="delet-student-modalLabel">Xóa bài viết?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">MI Admin</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
             </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa sinh viên này?</p>
-            </div>
-            <div class="modal-footer">
-                <button id="btn-delete-instructor" type="button" class="btn btn-primary">Xóa bỏ</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-{{!-- Delete hidden form --}}
-
-{{!-- tao form trong de phuc vu cho viec submit --}}
-<form name="delete-instructor" class="mt-4" method="POST" ></form>
-{{!-- document.forms['delete-enterprise'] lấy ra thằng form--}} 
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-
-        var instructorID;
-        var enterpriseID;
-        var deleteForm = document.forms['delete-instructor'];
-        var btnDeletePost = document.getElementById('btn-delete-instructor');
-
-        //when dialog confirm clicked
-        $('#delete-instructor-modal').on('show.bs.modal', function (event) {
-            var button = $(event.relatedTarget);
-            instructorID = button.data('id');//id này được nạp từ thằng data-id={{this.id_enterprise}}, nó là id
-            enterpriseID = button.data('enterpirse')
-        });
-        
-        btnDeletePost.onclick = function(){
-            deleteForm.action ='/enterprises/' +enterpriseID+'/instructors/'+ instructorID +'?_method=DELETE';
-            deleteForm.submit();//submit form delete
-        };
-    })
-</script>
-
-
-
-
-
-
-
-
-
-
-
-<section class="w3l-footer-29-main">
-    <div class="footer-29 py-5">
-        <div class="container py-lg-4">
-            <div class="row footer-top-29">
-                <div class="footer-list-29 col-lg-4">
-                    <h6 class="footer-title-29">Về chúng tôi</h6>
-                    <p>Đào tạo, nghiên cứu gắn liền với khoa học và công nghệ nhằm tạo ra những sinh viên và học viên có
-                        lòng yêu nước, có phẩm chất Nhân văn mang đậm bản sắc Việt Nam, có ý thức sinh hoạt cộng đồng,
-                        có sức khỏe, có năng lực và kỹ năng toàn diện, tự tin, năng động, sáng tạo và trở thành công dân
-                        khởi nghiệp mang tính toàn cầu. </p>
-                    <div class="main-social-footer-29 mt-4">
-                        <a href="#facebook" class="facebook"><span class="fa fa-facebook"></span></a>
-                        <a href="#twitter" class="twitter"><span class="fa fa-twitter"></span></a>
-                        <a href="#instagram" class="instagram"><span class="fa fa-instagram"></span></a>
-                        <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin"></span></a>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Sinh Viên</span>
+                </a>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/students/stored">Quản Lý Sinh Viên</a>
+                        <a class="collapse-item" href="/admin/manages">Danh Sách Sinh Viên Thực Tập</a>
+                        <a class="collapse-item" href="/admin/manages/stored">Quản Lý Sinh Viên Thực Tập</a>
+                        <a class="collapse-item" href="/admin/students/create">Thêm Sinh Viên</a>
                     </div>
                 </div>
+            </li>
 
-                <div class="col-lg-2 col-md-6 col-sm-4 footer-list-29 footer-2 mt-lg-0 mt-5">
-
-                    <ul>
-                        <h6 class="footer-title-29">Liên kết</h6>
-                        <li><a href="/">Trang chủ</a></li>
-                        <li><a href="/home/about">Về chúng tôi</a></li>
-                        <li><a href="/home/services">Dịch vụ</a></li>
-                        <li><a href="#"> Bài đăng</a></li>
-                        <li><a href="/home/contact">Liên hệ</a></li>
-                    </ul>
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Doanh Nghiệp</span>
+                </a>
+                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/enterprises">Danh Sách Doanh Nghiệp</a>
+                        <a class="collapse-item" href="/admin/enterprises/stored">Quản Lý Doanh Nghiệp</a>
+                        <a class="collapse-item" href="/admin/enterprises/create">Thêm Doanh Nghiệp</a>
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6 footer-list-29 footer-3 mt-lg-0 mt-5">
+            </li>
 
-                    <ul>
-                        <h6 class="footer-title-29">Services</h6>
-                        <li><a href="#team">Construction Manage</a></li>
-                        <li><a href="#insta">Architecture & Building</a></li>
-                        <li><a href="#careers">Xây dựng hợp đồng</a></li>
-                        <li><a href="#help">Trợ giúp & Hỗ trợ</a></li>
-                    </ul>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities3"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Người Hướng Dẫn</span>
+                </a>
+                <div id="collapseUtilities3" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/instructors">Danh Sách Người Hướng Dẫn</a>
+                        <a class="collapse-item" href="/admin/instructors/stored">Quản Lý Người Hướng Dẫn</a>
+                        <a class="collapse-item" href="/admin/instructors/create">Thêm Người Hướng Dẫn</a>
 
+                    </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-8 footer-list-29 footer-1 mt-lg-0 mt-5">
-                    <h6 class="footer-title-29">Liên hệ</h6>
-                    <ul>
-                        <li>
-                            <p><span class="fa fa-map-marker"></span> 254 Nguyễn Văn Linh, Quận Thanh Khê - Tp. Đà Nẵng
-                            </p>
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities4"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Khóa Thực Tập</span>
+                </a>
+                <div id="collapseUtilities4" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/manages">Danh Sách Khóa Thực Tập</a>
+                        <a class="collapse-item" href="/admin/manages/stored">Quản Lý Khóa Thực Tập</a>
+                        <a class="collapse-item" href="admin/manages/create">Thêm Khóa Thực Tập</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse"
+                    data-target="#collapseUtilities5" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Quản Lý Tài Khoản</span>
+                </a>
+                <div id="collapseUtilities5" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/users">Quản Lý Tài Khoản</a>
+
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse"
+                    data-target="#collapseUtilities6" aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Bài Viết</span>
+                </a>
+                <div id="collapseUtilities6" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/admin/users">Danh Sách Bài Viết</a>
+                        <a class="collapse-item" href="/admin/users">Quản Lý Bài Viết</a>
+                        <a class="collapse-item" href="/admin/users">Thêm Bài Viết</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Divider -->
+
+
+            <!-- Heading -->
+
+
+            <!-- Nav Item - Pages Collapse Menu -->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!-- Topbar Search -->
+                    <form
+                        class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                aria-label="Search" aria-describedby="basic-addon2">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-search fa-sm"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto" style="font-size: 26px; font-weight: 700;">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </li>
-                        <li><a href="tel:+7-800-999-800"><span class="fa fa-phone"></span> +(21)-255-999-8888</a></li>
-                        <li><a href="mailto:industrie@mail.com" class="mail"><span class="fa fa-envelope-open-o"></span>
-                                industrie@mail.com</a></li>
+
+                        <!-- Nav Item - Alerts -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="/home" id="alertsDropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                Home
+                            </a>
+                            <!-- Dropdown - Alerts -->
+
+                        </li>
+
+                        <!-- Nav Item - Messages -->
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="/home/about" id="messagesDropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                Giới Thiệu
+                                <!-- Counter - Messages -->
+
+                            </a>
+                            <!-- Dropdown - Messages -->
+
+                        </li>
+                        <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="/home/services" id="messagesDropdown"
+                                role="button" aria-haspopup="true" aria-expanded="false">
+                                Tin Tức
+                                <!-- Counter - Messages -->
+
+                            </a>
+                            <!-- Dropdown - Messages -->
+
+                        </li>
+
+                        <div class="topbar-divider d-none d-sm-block"></div>
+
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="/admin" id="userDropdown" role="button"
+                                aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">ADMIN</span>
+                                <img class="img-profile rounded-circle" src="/dashboard/img/undraw_profile.svg">
+                            </a>
+                            <!-- Dropdown - User Information -->
+
+                        </li>
+
                     </ul>
+
+                </nav>
+
+
+            </div>
+
+
+
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <h1>Quản Lý Người Hướng Dẫn</h1>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên người hướng dẫn</th>
+                                <th scope="col">Trình độ</th>
+                                <th scope="col">Liên hệ</th>
+                                <th scope="col">Doanh nghiệp</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each instructors}}
+                            <tr>
+                                <td>{{this.name_instructor}}</td>
+                                <td>{{this.level}}</td>
+                                <td>{{this.contact}}</td>
+                                <td>{{this.name}}</td>
+                                <td>
+                                    <a href="/admin/instructors/{{id_instructor}}/edit" class="btn btn-link"><i
+                                            class="fas fa-wrench"></i></a>
+                                    <a href="" class="btn btn-link" data-toggle="modal" data-id={{this.id_instructor}}
+                                        data-target="#delete-enterprise-modal"><i class="fas fa-trash-alt"></i></a>
+                                </td>
+
+
+                            </tr>
+
+                            {{/each}}
+                        </tbody>
+                    </table>
+
+
+
+
                 </div>
-                <div class="col-lg-12 footer-list-29 footer-4 mt-5">
-                    <div class="column1 align-self">
-                        <h6 class="footer-title-29 mb-1">Theo dõi bản tin của chúng tôi </h6>
-                        <p>Nhập email của bạn và nhận tin tức mới nhất từ ​​chúng tôi.</p>
+                <!-- Modal -->
+                <div class="modal fade" id="delete-enterprise-modal" tabindex="-1" role="dialog"
+                    aria-labelledby="delete-enterprise-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="delet-student-modalLabel">Xóa người hướng dẫn?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Bạn có chắc chắn muốn người hướng dẫn này?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="btn-delete-enterprise" type="button" class="btn btn-primary">Xóa bỏ</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="column1">
-                        <form action="#" class="subscribe" method="post">
-                            <input type="email" name="email" placeholder="Địa chỉ email của bạn" required="">
-                            <button><span class="fa fa-paper-plane-o pr-1"></span></button>
-                        </form>
-                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
                 </div>
             </div>
         </div>
     </div>
-</section>
-<section class="w3l-footer-29-main w3l-copyright">
-    <div class="container">
-        <div class="bottom-copies">
-            <p class="copy-footer-29 text-center">Copyright © 2020 - Bản quyền thuộc về <a href="" target="_blank">
-                    WEBSITE QUẢN LÝ THỰC TẬP SINH</a></p>
-        </div>
-    </div>
 
-    <!-- move top -->
-    <button onclick="topFunction()" id="movetop" title="Go to top">
-        <span class="fa fa-angle-up"></span>
-    </button>
-    <script src="/assets/js/jquery-3.3.1.min.js"></script>
-    <script src="/assets/js/theme-change.js"></script>
-    <!-- libhtbox -->
-    <script src="/assets/js/lightbox-plus-jquery.min.js"></script>
-    <!-- libhtbox -->
-    <script src="/assets/js/owl.carousel.js"></script>
-    <!-- script for banner slider-->
+
+    {{!-- tao form trong de phuc vu cho viec submit --}}
+    <form name="delete-enterprise" class="mt-4" method="POST"></form>
+    {{!-- document.forms['delete-enterprise'] lấy ra thằng form--}}
+
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="/dashboard/vendor/jquery/jquery.min.js"></script>
+    <script src="/dashboard/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/dashboard/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/dashboard/js/sb-admin-2.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('.owl-one').owlCarousel({
-                loop: true,
-                margin: 0,
-                nav: false,
-                responsiveClass: true,
-                autoplay: true,
-                autoplayTimeout: 5000,
-                autoplaySpeed: 1000,
-                autoplayHoverPause: false,
-                responsive: {
-                    0: {
-                        items: 1,
-                        nav: false
-                    },
-                    480: {
-                        items: 1,
-                        nav: false
-                    },
-                    667: {
-                        items: 1,
-                        nav: true
-                    },
-                    1000: {
-                        items: 1,
-                        nav: true
-                    }
-                }
-            })
+        document.addEventListener('DOMContentLoaded', function () {
+
+            var enterpriseID;
+            var deleteForm = document.forms['delete-enterprise'];
+            var btnDeleteEnterprise = document.getElementById('btn-delete-enterprise');
+
+            //when dialog confirm clicked
+            $('#delete-enterprise-modal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                enterpriseID = button.data('id');//id này được nạp từ thằng data-id={{this.id_enterprise}}, nó là id
+
+            });
+
+            btnDeleteEnterprise.onclick = function () {
+                deleteForm.action = enterpriseID + '?_method=DELETE';
+                deleteForm.submit();//submit form delete
+            };
         })
     </script>
-    <!-- //script -->
-    <!-- disable body scroll which navbar is in active -->
-    <script>
-        $(function () {
-            $('.navbar-toggler').click(function () {
-                $('body').toggleClass('noscroll');
-            })
-        });
-    </script>
-    <!-- disable body scroll which navbar is in active -->
+    <!-- Page level plugins -->
+    <script src="/dashboard/vendor/chart.js/Chart.min.js"></script>
 
-    <!--/MENU-JS-->
-    <script>
-        $(window).on("scroll", function () {
-            var scroll = $(window).scrollTop();
+    <!-- Page level custom scripts -->
+    <script src="/dashboard/js/demo/chart-area-demo.js"></script>
+    <script src="/dashboard/js/demo/chart-pie-demo.js"></script>
+    <link href="/dashboard/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
-            if (scroll >= 80) {
-                $("#site-header").addClass("nav-fixed");
-            } else {
-                $("#site-header").removeClass("nav-fixed");
-            }
-        });
-
-        //Main navigation Active Class Add Remove
-        $(".navbar-toggler").on("click", function () {
-            $("header").toggleClass("active");
-        });
-        $(document).on("ready", function () {
-            if ($(window).width() > 991) {
-                $("header").removeClass("active");
-            }
-            $(window).on("resize", function () {
-                if ($(window).width() > 991) {
-                    $("header").removeClass("active");
-                }
-            });
-        });
-    </script>
-    <!--//MENU-JS-->
-
-    <script src="/assets/js/bootstrap.min.js"></script>
-
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link href="//fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,600;0,700;1,400&display=swap"
         rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="/dashboard/css/sb-admin-2.min.css" rel="stylesheet">
+
+</body>

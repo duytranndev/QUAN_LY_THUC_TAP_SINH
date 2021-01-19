@@ -16,7 +16,7 @@ function ChangeToSlug(slug) {
         '',
     );
     //Đổi khoảng trắng thành ký tự gạch ngang
-    slug = slug.replace(/ /gi, ' - ');
+    slug = slug.replace(/ /gi, '-');
     //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
     //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
     slug = slug.replace(/\-\-\-\-\-/gi, '-');
@@ -53,20 +53,16 @@ function ChangToID(id) {
 
 module.exports = {
     getCourse: (callBack) => {
-        db.query(
-            `select * from course_intern`,
-            [],
-            (error, results, fiedls) => {
-                if (error) {
-                    return callBack(error);
-                }
-                return callBack(null, results);
-            },
-        );
+        db.query(`select * from  `, [], (error, results, fiedls) => {
+            if (error) {
+                return callBack(error);
+            }
+            return callBack(null, results);
+        });
     },
     getCourseBySlug: (slug, callBack) => {
         db.query(
-            `select * from course_intern where slug=?`,
+            `select * from course where slug=?`,
             [slug],
             (error, results, fiedls) => {
                 if (error) {
@@ -78,7 +74,7 @@ module.exports = {
     },
     getCourseByID: (id, callBack) => {
         db.query(
-            `select * from course_intern where id_course=?`,
+            `select * from course where id_course=?`,
             [id],
             (error, results, fiedls) => {
                 if (error) {
@@ -90,7 +86,7 @@ module.exports = {
     },
     getCourseById_enter: (id, callBack) => {
         db.query(
-            `select * from course_intern where id_enterprise=?`,
+            `select * from course where id_enterprise=?`,
             [id],
             (error, results, fiedls) => {
                 if (error) {
@@ -120,20 +116,21 @@ module.exports = {
             (currentdate.getMonth() + 1) +
             '/' +
             currentdate.getFullYear();
-        let id_course = ChangToID(id + '_' + data.name_course);
-        let slug = ChangeToSlug(id_course + ' ' + data.name_course);
+        let slug = ChangeToSlug(data.name_course + data.title);
 
         db.query(
-            `insert into course_intern (id_course, name_course, timecreate, content, time_train, id_instructor ,id_enterprise,  slug ) values(?,?,?,?,?,?,?,?)`,
+            `insert into course (name_course, id_enterprise, slug, time_create, content ,time_train, title, address, time_end, id_instructor ) values(?,?,?,?,?,?,?,?,?,?)`,
             [
-                id_course,
                 data.name_course,
+                data.id_enterprise,
+                slug,
                 datetime,
                 data.content,
                 data.time_train,
+                title,
+                address,
+                time_end,
                 data.id_instructor,
-                id,
-                slug,
             ],
             (error, results, fields) => {
                 if (error) {
@@ -147,7 +144,7 @@ module.exports = {
         let slug = ChangeToSlug(id + ' ' + data.name_course);
 
         db.query(
-            `update course_intern set name_course=?, time_course=?, slug=?, id_enterprise=? where id_course=?`,
+            `update course set name_course=?, time_course=?, slug=?, id_enterprise=? where id_course=?`,
             [
                 data.name_course,
                 data.time_course,
@@ -165,7 +162,7 @@ module.exports = {
     },
     deleteCourse: (id_course, callBack) => {
         db.query(
-            `delete from course_intern where id_course=?`,
+            `delete from course where id_course=?`,
             [id_course],
             (error, results, fiedls) => {
                 if (error) {
@@ -176,30 +173,3 @@ module.exports = {
         );
     },
 };
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
-
-const CourseIntern = new Schema(
-    {
-        ten_khoa: { type: String, maxlength: 255, required: true },
-        tieu_de: { type: String, maxlength: 255, required: true },
-        noi_dung: { type: String, maxlength: 255 },
-        thoigian_dukien: { type: String, maxlength: 255 },
-        tg_kt_dukien: { type: String, maxlength: 255 },
-        id_enterprise: { type: String, maxlength: 255 },
-        slug: { type: String, slug: 'ten_khoa', unique: true },
-        id_instructor: { type: String, maxlength: 255 },
-        diadiem_tt: { type: String, maxlength: 255 },
-    },
-    {
-        timestamps: true,
-    },
-);
-
-module.exports = mongoose.model('CourseIntern', CourseIntern);
