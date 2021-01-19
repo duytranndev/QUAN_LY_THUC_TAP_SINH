@@ -16,7 +16,7 @@ function ChangeToSlug(slug) {
         '',
     );
     //Đổi khoảng trắng thành ký tự gạch ngang
-    slug = slug.replace(/ /gi, ' - ');
+    slug = slug.replace(/ /gi, '-');
     //Đổi nhiều ký tự gạch ngang liên tiếp thành 1 ký tự gạch ngang
     //Phòng trường hợp người nhập vào quá nhiều ký tự trắng
     slug = slug.replace(/\-\-\-\-\-/gi, '-');
@@ -60,6 +60,21 @@ module.exports = {
             return callBack(null, results);
         });
     },
+    getAllInstructor: (callBack) => {
+        db.query(
+            `select level, name_instructor, id_instructor, enterprise.id_enterprise, name, instructor.contact 
+        from instructor 
+        inner join enterprise 
+        on instructor.id_enterprise = enterprise.id_enterprise`,
+            [],
+            (error, results, fiedls) => {
+                if (error) {
+                    return callBack(error);
+                }
+                return callBack(null, results);
+            },
+        );
+    },
     getInstructorBySlug: (slug, callBack) => {
         db.query(
             `select * from instructor where slug=?`,
@@ -86,7 +101,7 @@ module.exports = {
     },
     getInstructorById_enter: (id, callBack) => {
         db.query(
-            `select * from instructor where id_enterprise=?`,
+            `select level, name_instructor, id_instructor, enterprise.id_enterprise, name, instructor.contact from instructor inner join enterprise on instructor.id_enterprise = enterprise.id_enterprise where instructor.id_enterprise=?`,
             [id],
             (error, results, fiedls) => {
                 if (error) {
@@ -97,19 +112,14 @@ module.exports = {
         );
     },
     createInstructor: (id, data, file, callBack) => {
-        let id_instructor = ChangToID(
-            data.name_instructor.split(' ').slice(-1) +
-                '_' +
-                id.substr(-4) +
-                data.nickname,
-        );
-        let slug = ChangeToSlug(id_instructor + ' ' + data.name_instructor);
+        let slug = ChangeToSlug(data.name_instructor + data.id_enterprise);
         let image_name;
         if (file) {
             let uploadedFile = file.image_instructor;
             image_name = uploadedFile.name;
             let fileExtension = uploadedFile.mimetype.split('/')[1];
-            image_name = id_instructor + '.' + fileExtension;
+            image_name =
+                ChangeToSlug(data.name_instructor) + '.' + fileExtension;
 
             if (
                 uploadedFile.mimetype === 'image/png' ||
@@ -128,17 +138,16 @@ module.exports = {
             }
         }
         db.query(
-            `insert into instructor (id_instructor, name_instructor, nickname ,birthday, describe_instructor, image_instructor, contact, slug, id_enterprise) values(?,?,?,?,?,?,?,?,?)`,
+            `insert into instructor ( name_instructor, birthday, describe_instructor, level, image, contact, slug, id_enterprise) values(?,?,?,?,?,?,?,?)`,
             [
-                id_instructor,
                 data.name_instructor,
-                data.nickname,
                 data.birthday,
                 data.describe_instructor,
+                data.level,
                 image_name,
                 data.contact,
                 slug,
-                id,
+                data.id_enterprise,
             ],
             (error, results, fields) => {
                 if (error) {
@@ -182,28 +191,3 @@ module.exports = {
         );
     },
 };
-
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-const slug = require('mongoose-slug-generator');
-mongoose.plugin(slug);
-
-const Instructor = new Schema(
-    {
-        name: { type: String, maxlength: 255, required: true },
-        ngay_sinh: { type: String, maxlength: 255 },
-        mo_ta: { type: String, maxlength: 255 },
-        image: { type: String, maxlength: 255 },
-        lien_he: { type: String, maxlength: 255 },
-        id_enterprise: { type: String, maxlength: 255 },
-        slug: { type: String, slug: 'name', unique: true },
-    },
-    {
-        timestamps: true,
-    },
-);
-
-module.exports = mongoose.model('Instructor', Instructor);
