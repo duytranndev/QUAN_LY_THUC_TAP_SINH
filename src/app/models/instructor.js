@@ -62,7 +62,7 @@ module.exports = {
     },
     getAllInstructor: (callBack) => {
         db.query(
-            `select level, name_instructor, id_instructor, enterprise.id_enterprise, name, instructor.contact 
+            `select level, name_instructor, id_instructor,enterprise.id_enterprise,  name, instructor.slug, instructor.image, instructor.contact 
         from instructor 
         inner join enterprise 
         on instructor.id_enterprise = enterprise.id_enterprise`,
@@ -77,7 +77,10 @@ module.exports = {
     },
     getInstructorBySlug: (slug, callBack) => {
         db.query(
-            `select * from instructor where slug=?`,
+            `SELECT name_instructor, birthday, describe_instructor, enterprise.name, instructor.contact, level , image FROM instructor
+      inner join enterprise
+      on instructor.id_enterprise = enterprise.id_enterprise
+      where instructor.slug =?`,
             [slug],
             (error, results, fiedls) => {
                 if (error) {

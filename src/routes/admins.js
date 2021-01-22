@@ -91,7 +91,7 @@ router.get(
     '/enterprises/:id_enterprise/instructors/:slug',
     instructorController.show,
 );
-
+router.get('/instructors/:slug', instructorController.show);
 router.get('/', adminController.index);
 
 module.exports = router;
