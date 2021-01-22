@@ -59,7 +59,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-       <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/home">
@@ -133,7 +133,7 @@
                         <a class="collapse-item" href="/admin/instructors">Danh Sách Người Hướng Dẫn</a>
                         <a class="collapse-item" href="/admin/instructors/stored">Quản Lý Người Hướng Dẫn</a>
                         <a class="collapse-item" href="/admin/instructors/create">Thêm Người Hướng Dẫn</a>
-                        
+
                     </div>
                 </div>
             </li>
@@ -156,8 +156,8 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse" data-target="#collapseUtilities5"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse"
+                    data-target="#collapseUtilities5" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Quản Lý Tài Khoản</span>
                 </a>
@@ -165,14 +165,14 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="/admin/users">Quản Lý Tài Khoản</a>
-                        
+
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse" data-target="#collapseUtilities6"
-                    aria-expanded="true" aria-controls="collapseUtilities">
+                <a class="nav-link collapsed" href="/admin/users" data-toggle="collapse"
+                    data-target="#collapseUtilities6" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Bài Viết</span>
                 </a>
@@ -319,11 +319,12 @@
                 <div class="row">
                     {{#each enterprises}}
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="card">
-                            <a href="/enterprises/{{this.slug}}">
+                            <a href="/admin/enterprises/{{this.slug}}">
                                 <div class="image">
-                                    <img src="../assets/img/{{this.image_enterprise}}" />
+                                    <img style="width: 100%; height: 200px;"
+                                        src="../assets/img/{{this.image_enterprise}}" />
                                 </div>
                             </a>
                             <div class="card-inner">
